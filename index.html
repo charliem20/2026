@@ -15,7 +15,6 @@
 
   <title>Wallet Racers | $WRACE</title>
 
-  <!-- Prevents the favicon 404 error -->
   <link
     rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏎️</text></svg>"
@@ -64,10 +63,7 @@
         ),
         var(--black);
 
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body.overlay-open {
@@ -95,7 +91,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
 
       background: rgba(4, 6, 4, 0.88);
       border: 1px solid var(--border);
@@ -108,12 +104,12 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-right: auto;
     }
 
     .brand img {
       width: 48px;
       height: 48px;
-
       object-fit: cover;
 
       border: 1px solid var(--border);
@@ -122,14 +118,12 @@
 
     .brand strong {
       display: block;
-
       font-size: 15px;
       letter-spacing: 1px;
     }
 
     .brand span {
       color: var(--green);
-
       font-size: 13px;
       font-weight: bold;
     }
@@ -141,13 +135,17 @@
 
     nav a {
       color: #dce2d8;
-
       font-size: 14px;
       font-weight: bold;
     }
 
     nav a:hover {
       color: var(--green);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
     }
 
     .button {
@@ -165,6 +163,7 @@
       font-weight: bold;
 
       cursor: pointer;
+
       transition:
         transform 0.2s,
         opacity 0.2s,
@@ -284,7 +283,7 @@
     }
 
     .contract {
-      max-width: 520px;
+      max-width: 540px;
       margin-top: 28px;
     }
 
@@ -329,6 +328,8 @@
     }
 
     .contract button span {
+      flex-shrink: 0;
+
       color: var(--green);
       font-weight: bold;
     }
@@ -369,7 +370,6 @@
       margin-top: 7px;
 
       color: var(--gray);
-
       font-size: 13px;
     }
 
@@ -395,11 +395,10 @@
     }
 
     .section-title p {
-      max-width: 700px;
+      max-width: 720px;
       margin-top: 15px;
 
       color: var(--gray);
-
       line-height: 1.7;
     }
 
@@ -527,7 +526,7 @@
       font-size: 18px;
       font-weight: bold;
 
-      transition: left 0.14s linear;
+      transition: left 0.08s linear;
     }
 
     .racer::before,
@@ -643,7 +642,6 @@
       margin-top: 13px;
 
       color: var(--gray);
-
       line-height: 1.65;
     }
 
@@ -672,7 +670,6 @@
       margin-top: 15px;
 
       color: var(--gray);
-
       line-height: 1.7;
     }
 
@@ -703,7 +700,6 @@
       margin-top: 15px;
 
       color: var(--gray);
-
       line-height: 1.7;
     }
 
@@ -881,7 +877,6 @@
 
     .winner-celebration p {
       margin-top: 12px;
-
       color: var(--gray);
     }
 
@@ -943,7 +938,7 @@
       }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 950px) {
       nav {
         display: none;
       }
@@ -958,9 +953,21 @@
       }
     }
 
-    @media (max-width: 650px) {
-      header > .button {
+    @media (max-width: 700px) {
+      header {
+        gap: 8px;
+      }
+
+      .brand strong {
+        font-size: 12px;
+      }
+
+      .header-actions .button-green {
         display: none;
+      }
+
+      #musicToggle {
+        padding: 0 12px;
       }
 
       .hero {
@@ -1059,12 +1066,22 @@
       <a href="#community">Community</a>
     </nav>
 
-    <a
-      class="button button-green"
-      href="#community"
-    >
-      Join Us
-    </a>
+    <div class="header-actions">
+      <button
+        class="button button-dark"
+        id="musicToggle"
+        type="button"
+      >
+        🔇 Music Off
+      </button>
+
+      <a
+        class="button button-green"
+        href="#community"
+      >
+        Join Us
+      </a>
+    </div>
   </header>
 
   <main>
@@ -1111,7 +1128,7 @@
             type="button"
           >
             <strong id="contractText">
-              22LtdtQ9fi41iLVU28Ez2gLMPMZ7jr7SKcZXwkFGpump
+              22LtdtQ9fi4i1LVU28Ez2gLMPMZ7jr7SKcZXwkFGpump
             </strong>
 
             <span>Copy</span>
@@ -1124,7 +1141,7 @@
     <div class="statistics">
       <article>
         <strong>2 MIN</strong>
-        <span>Recommended race duration</span>
+        <span>Complete race duration</span>
       </article>
 
       <article>
@@ -1150,8 +1167,9 @@
         <h2>Wallet Race</h2>
 
         <p>
-          This demonstration uses fictional wallet addresses.
-          It does not detect real purchases or send real rewards.
+          This demonstration currently uses fictional wallet addresses.
+          Racers advance with the timer and the winner reaches the finish
+          line when the clock reaches 00:00.
         </p>
       </div>
 
@@ -1165,7 +1183,7 @@
 
           <div class="race-data race-timer">
             <span>TIME</span>
-         <strong id="raceTimer">02:00</strong>
+            <strong id="raceTimer">02:00</strong>
           </div>
 
           <button
@@ -1205,8 +1223,8 @@
         <h2>How Will It Work?</h2>
 
         <p>
-          The real integration will be built in stages to protect
-          wallets and correctly verify blockchain transactions.
+          The real blockchain integration will be developed separately.
+          The current website is a visual demonstration.
         </p>
       </div>
 
@@ -1218,7 +1236,7 @@
           <h3>Confirmed Purchase</h3>
 
           <p>
-            The server will detect an eligible and confirmed
+            A secure server will detect an eligible and confirmed
             purchase of $WRACE.
           </p>
         </article>
@@ -1237,11 +1255,11 @@
         <article class="card">
           <span class="card-number">03</span>
 
-          <h3>Fast Race</h3>
+          <h3>Two-Minute Race</h3>
 
           <p>
-            Eligible wallets will participate in an animated
-            race lasting approximately two minutes.
+            Eligible wallets race for the full two minutes and
+            finish when the clock reaches zero.
           </p>
         </article>
 
@@ -1251,8 +1269,8 @@
           <h3>Verifiable Result</h3>
 
           <p>
-            The winning wallet and reward transaction can be
-            displayed publicly and verified on-chain.
+            The winning wallet and reward transaction can later
+            be displayed publicly and verified on-chain.
           </p>
         </article>
 
@@ -1319,9 +1337,8 @@
 
         <p>
           Wallet Racers will never request seed phrases,
-          passwords or private keys. Real rewards should be
-          sent from a separate prize wallet with a limited
-          balance.
+          passwords or private keys. Private keys must never
+          be stored inside GitHub or browser code.
         </p>
       </div>
     </section>
@@ -1343,23 +1360,24 @@
         </h2>
 
         <p>
-  Follow Wallet Racers on X for project updates, race announcements
-  and upcoming $WRACE community events.
-</p>
+          Follow Wallet Racers on X for project updates,
+          race announcements and upcoming $WRACE community events.
+        </p>
 
         <div class="actions">
           <a
-  class="button button-dark"
-  href="https://x.com/WalletRacersSol"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Follow us on X
-</a>
+            class="button button-dark"
+            href="https://x.com/WalletRacersSol"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Follow Us on X
+          </a>
 
           <a
             class="button button-dark"
             href="#"
+            id="telegramButton"
           >
             Telegram — Coming Soon
           </a>
@@ -1440,13 +1458,30 @@
     </div>
   </div>
 
+  <!-- Optional background music -->
+  <!-- Upload a file named music.mp3 to the repository. -->
+
+  <audio
+    id="backgroundMusic"
+    src="music.mp3"
+    loop
+    preload="metadata"
+  ></audio>
+
   <script>
     /*
-      Use 20 seconds for testing.
-      Change 20 to 120 for a two-minute race.
+      RACE CONFIGURATION
+      120 seconds = 2 minutes.
     */
 
     const RACE_DURATION = 120;
+
+    /*
+      These are demonstration wallets.
+      They will later be replaced by real eligible wallets
+      received from a secure backend.
+    */
+
     const demoWallets = [
       "7x4B...9LmP",
       "F2k9...Qp81",
@@ -1492,15 +1527,29 @@
     const notification =
       document.getElementById("notification");
 
+    const musicToggle =
+      document.getElementById("musicToggle");
+
+    const backgroundMusic =
+      document.getElementById("backgroundMusic");
+
+    const telegramButton =
+      document.getElementById("telegramButton");
+
     const confettiContext =
       confettiCanvas.getContext("2d");
 
+    backgroundMusic.volume = 0.24;
+
     let racers = [];
-    let movementInterval = null;
-    let timerInterval = null;
+    let raceActive = false;
+    let raceAnimationFrame = null;
     let celebrationTimeout = null;
     let confettiAnimation = null;
-    let raceActive = false;
+    let selectedWinnerIndex = null;
+    let finalTargets = [];
+    let musicEnabled = false;
+    let audioContext = null;
 
     function formatTime(seconds) {
       const minutes =
@@ -1517,7 +1566,7 @@
     }
 
     function getStartingPosition() {
-      return window.innerWidth <= 650
+      return window.innerWidth <= 700
         ? 105
         : 140;
     }
@@ -1541,50 +1590,391 @@
 
       racers = [];
 
-      demoWallets.forEach((wallet) => {
-        const lane =
-          document.createElement("div");
+      demoWallets.forEach(
+        (wallet, index) => {
+          const lane =
+            document.createElement("div");
 
-        lane.className = "lane";
+          lane.className = "lane";
 
-        const walletLabel =
-          document.createElement("div");
+          const walletLabel =
+            document.createElement("div");
 
-        walletLabel.className =
-          "wallet-address";
+          walletLabel.className =
+            "wallet-address";
 
-        walletLabel.textContent =
-          wallet;
+          walletLabel.textContent =
+            wallet;
 
-        const racer =
-          document.createElement("div");
+          const racer =
+            document.createElement("div");
 
-        racer.className = "racer";
-        racer.textContent = "W";
+          racer.className = "racer";
+          racer.textContent = "W";
 
-        racer.dataset.wallet =
-          wallet;
+          racer.dataset.wallet =
+            wallet;
 
-        racer.dataset.progress =
-          "0";
+          racer.dataset.progress =
+            "0";
 
-        racer.dataset.speed =
-          (
-            0.7 +
-            Math.random() * 0.55
-          ).toFixed(3);
+          racer.dataset.phase =
+            String(
+              Math.random() *
+              Math.PI *
+              2
+            );
 
-        lane.appendChild(walletLabel);
-        lane.appendChild(racer);
+          racer.dataset.waveSpeed =
+            String(
+              0.75 +
+              Math.random() *
+              0.65
+            );
 
-        track.appendChild(lane);
-        racers.push(racer);
-      });
+          lane.appendChild(
+            walletLabel
+          );
+
+          lane.appendChild(
+            racer
+          );
+
+          track.appendChild(
+            lane
+          );
+
+          racers.push(
+            racer
+          );
+        }
+      );
     }
+
+    function createFinalTargets() {
+      selectedWinnerIndex =
+        Math.floor(
+          Math.random() *
+          racers.length
+        );
+
+      const otherTargets = [];
+
+      for (
+        let index = 0;
+        index < racers.length - 1;
+        index++
+      ) {
+        otherTargets.push(
+          99 -
+          index * 0.6 -
+          Math.random() * 0.2
+        );
+      }
+
+      otherTargets.sort(
+        (first, second) =>
+          second - first
+      );
+
+      let otherPosition = 0;
+
+      finalTargets =
+        racers.map(
+          (racer, index) => {
+            if (
+              index ===
+              selectedWinnerIndex
+            ) {
+              return 100;
+            }
+
+            const target =
+              otherTargets[
+                otherPosition
+              ];
+
+            otherPosition += 1;
+
+            return target;
+          }
+        );
+    }
+
+    function easeRaceProgress(value) {
+      /*
+        Smooth acceleration and finish.
+        The value always reaches exactly 1
+        when the timer reaches zero.
+      */
+
+      return 1 -
+        Math.pow(
+          1 - value,
+          1.42
+        );
+    }
+
+    function startRace() {
+      if (raceActive) {
+        return;
+      }
+
+      cancelAnimationFrame(
+        raceAnimationFrame
+      );
+
+      closeWinnerCelebration();
+
+      createRaceLanes();
+      createFinalTargets();
+
+      raceActive = true;
+
+      startRaceButton.disabled =
+        true;
+
+      startRaceButton.textContent =
+        "Race in Progress";
+
+      raceStatus.textContent =
+        "RACING";
+
+      raceTimer.textContent =
+        "02:00";
+
+      winningWallet.textContent =
+        "Race in progress...";
+
+      playRaceStartSound();
+
+      const totalDuration =
+        RACE_DURATION * 1000;
+
+      const raceStartTime =
+        performance.now();
+
+      function updateRace(
+        currentTime
+      ) {
+        if (!raceActive) {
+          return;
+        }
+
+        const elapsedTime =
+          Math.min(
+            currentTime -
+            raceStartTime,
+            totalDuration
+          );
+
+        const racePercentage =
+          elapsedTime /
+          totalDuration;
+
+        const easedProgress =
+          easeRaceProgress(
+            racePercentage
+          );
+
+        const remainingMilliseconds =
+          Math.max(
+            totalDuration -
+            elapsedTime,
+            0
+          );
+
+        const remainingSeconds =
+          Math.ceil(
+            remainingMilliseconds /
+            1000
+          );
+
+        raceTimer.textContent =
+          formatTime(
+            remainingSeconds
+          );
+
+        const maximumDistance =
+          getMaximumDistance();
+
+        const startingPosition =
+          getStartingPosition();
+
+        racers.forEach(
+          (racer, index) => {
+            const target =
+              finalTargets[index];
+
+            const phase =
+              Number(
+                racer.dataset.phase
+              );
+
+            const waveSpeed =
+              Number(
+                racer.dataset
+                  .waveSpeed
+              );
+
+            /*
+              The variation becomes smaller as
+              the race approaches the finish.
+            */
+
+            const variationStrength =
+              (1 - racePercentage) *
+              1.8;
+
+            const wave =
+              Math.sin(
+                elapsedTime /
+                (520 / waveSpeed) +
+                phase
+              ) *
+              variationStrength;
+
+            let progress =
+              target *
+              easedProgress +
+              wave;
+
+            /*
+              The winning wallet cannot touch
+              the finish line before 00:00.
+            */
+
+            if (
+              racePercentage < 1
+            ) {
+              const maximumBeforeFinish =
+                index ===
+                selectedWinnerIndex
+                  ? 99.15
+                  : target - 0.05;
+
+              progress =
+                Math.min(
+                  progress,
+                  maximumBeforeFinish
+                );
+            }
+
+            progress =
+              Math.max(
+                0,
+                progress
+              );
+
+            racer.dataset.progress =
+              String(progress);
+
+            racer.style.left =
+              startingPosition +
+              (
+                progress /
+                100
+              ) *
+              maximumDistance +
+              "px";
+          }
+        );
+
+        if (
+          elapsedTime >=
+          totalDuration
+        ) {
+          finishRace();
+          return;
+        }
+
+        raceAnimationFrame =
+          requestAnimationFrame(
+            updateRace
+          );
+      }
+
+      raceAnimationFrame =
+        requestAnimationFrame(
+          updateRace
+        );
+    }
+
+    function finishRace() {
+      if (!raceActive) {
+        return;
+      }
+
+      raceActive = false;
+
+      cancelAnimationFrame(
+        raceAnimationFrame
+      );
+
+      const maximumDistance =
+        getMaximumDistance();
+
+      const startingPosition =
+        getStartingPosition();
+
+      racers.forEach(
+        (racer, index) => {
+          const finalProgress =
+            finalTargets[index];
+
+          racer.dataset.progress =
+            String(
+              finalProgress
+            );
+
+          racer.style.left =
+            startingPosition +
+            (
+              finalProgress /
+              100
+            ) *
+            maximumDistance +
+            "px";
+        }
+      );
+
+      const winner =
+        racers[
+          selectedWinnerIndex
+        ];
+
+      raceTimer.textContent =
+        "00:00";
+
+      raceStatus.textContent =
+        "FINISHED";
+
+      winningWallet.textContent =
+        winner.dataset.wallet;
+
+      startRaceButton.disabled =
+        false;
+
+      startRaceButton.textContent =
+        "Start Another Race";
+
+      playWinnerSound();
+
+      setTimeout(() => {
+        showWinnerCelebration(
+          winner.dataset.wallet
+        );
+      }, 450);
+    }
+
+    /*
+      CONFETTI
+    */
 
     function resizeConfettiCanvas() {
       const pixelRatio =
-        window.devicePixelRatio || 1;
+        window.devicePixelRatio ||
+        1;
 
       confettiCanvas.width =
         Math.floor(
@@ -1632,7 +2022,7 @@
 
       const particles =
         Array.from(
-          { length: 180 },
+          { length: 190 },
           () => {
             const angle =
               Math.random() *
@@ -1702,7 +2092,9 @@
       const animationStart =
         performance.now();
 
-      function animateConfetti(currentTime) {
+      function animateConfetti(
+        currentTime
+      ) {
         const elapsed =
           currentTime -
           animationStart;
@@ -1852,180 +2244,225 @@
       );
     }
 
-    function finishRace() {
-      clearInterval(
-        movementInterval
-      );
+    /*
+      SOUND EFFECTS
+    */
 
-      clearInterval(
-        timerInterval
-      );
+    function getAudioContext() {
+      if (!audioContext) {
+        const AudioContextClass =
+          window.AudioContext ||
+          window.webkitAudioContext;
 
-      const ranking =
-        [...racers].sort(
-          (
-            firstRacer,
-            secondRacer
-          ) =>
-            Number(
-              secondRacer.dataset
-                .progress
-            ) -
-            Number(
-              firstRacer.dataset
-                .progress
-            )
-        );
+        if (!AudioContextClass) {
+          return null;
+        }
 
-      const winner =
-        ranking[0];
+        audioContext =
+          new AudioContextClass();
+      }
 
-      const maximumDistance =
-        getMaximumDistance();
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+        audioContext.resume();
+      }
 
-      const startingPosition =
-        getStartingPosition();
-
-      winner.style.left =
-        startingPosition +
-        maximumDistance +
-        "px";
-
-      raceTimer.textContent =
-        "00:00";
-
-      raceStatus.textContent =
-        "FINISHED";
-
-      winningWallet.textContent =
-        winner.dataset.wallet;
-
-      startRaceButton.disabled =
-        false;
-
-      startRaceButton.textContent =
-        "Start Another Race";
-
-      raceActive = false;
-
-      setTimeout(() => {
-        showWinnerCelebration(
-          winner.dataset.wallet
-        );
-      }, 500);
+      return audioContext;
     }
 
-    function startRace() {
-      if (raceActive) {
+    function playTone(
+      frequency,
+      duration,
+      delay = 0,
+      volume = 0.06
+    ) {
+      const context =
+        getAudioContext();
+
+      if (!context) {
         return;
       }
 
-      clearInterval(
-        movementInterval
+      const oscillator =
+        context.createOscillator();
+
+      const gain =
+        context.createGain();
+
+      oscillator.type =
+        "square";
+
+      oscillator.frequency.value =
+        frequency;
+
+      gain.gain.setValueAtTime(
+        volume,
+        context.currentTime +
+        delay
       );
 
-      clearInterval(
-        timerInterval
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        context.currentTime +
+        delay +
+        duration
       );
 
-      createRaceLanes();
+      oscillator.connect(
+        gain
+      );
 
-      raceActive = true;
+      gain.connect(
+        context.destination
+      );
 
-      startRaceButton.disabled =
-        true;
+      oscillator.start(
+        context.currentTime +
+        delay
+      );
 
-      startRaceButton.textContent =
-        "Race in Progress";
+      oscillator.stop(
+        context.currentTime +
+        delay +
+        duration
+      );
+    }
 
-      raceStatus.textContent =
-        "RACING";
+    function playRaceStartSound() {
+      playTone(
+        440,
+        0.15,
+        0
+      );
 
-      winningWallet.textContent =
-        "Race in progress...";
+      playTone(
+        550,
+        0.15,
+        0.2
+      );
 
-      let remainingTime =
-        RACE_DURATION;
+      playTone(
+        760,
+        0.32,
+        0.4
+      );
+    }
 
-      raceTimer.textContent =
-        formatTime(
-          remainingTime
+    function playWinnerSound() {
+      playTone(
+        523,
+        0.2,
+        0
+      );
+
+      playTone(
+        659,
+        0.2,
+        0.2
+      );
+
+      playTone(
+        784,
+        0.2,
+        0.4
+      );
+
+      playTone(
+        1046,
+        0.6,
+        0.6
+      );
+    }
+
+    /*
+      MUSIC
+    */
+
+    async function toggleMusic() {
+      if (
+        backgroundMusic.paused
+      ) {
+        try {
+          await backgroundMusic.play();
+
+          musicEnabled = true;
+
+          musicToggle.textContent =
+            "🔊 Music On";
+        } catch (error) {
+          musicEnabled = false;
+
+          musicToggle.textContent =
+            "Music Unavailable";
+        }
+      } else {
+        backgroundMusic.pause();
+
+        musicEnabled = false;
+
+        musicToggle.textContent =
+          "🔇 Music Off";
+      }
+    }
+
+    /*
+      COPY CONTRACT
+    */
+
+    async function copyContract() {
+      const contractAddress =
+        contractText.textContent
+          .trim();
+
+      try {
+        await navigator.clipboard
+          .writeText(
+            contractAddress
+          );
+
+        notification.textContent =
+          "Contract Copied";
+      } catch (error) {
+        const temporaryInput =
+          document.createElement(
+            "textarea"
+          );
+
+        temporaryInput.value =
+          contractAddress;
+
+        document.body.appendChild(
+          temporaryInput
         );
 
-      timerInterval =
-        setInterval(() => {
-          remainingTime -= 1;
+        temporaryInput.select();
 
-          raceTimer.textContent =
-            formatTime(
-              Math.max(
-                remainingTime,
-                0
-              )
-            );
+        document.execCommand(
+          "copy"
+        );
 
-          if (remainingTime <= 0) {
-            finishRace();
-          }
-        }, 1000);
+        temporaryInput.remove();
 
-      movementInterval =
-        setInterval(() => {
-          const maximumDistance =
-            getMaximumDistance();
+        notification.textContent =
+          "Contract Copied";
+      }
 
-          const startingPosition =
-            getStartingPosition();
+      notification.classList.add(
+        "visible"
+      );
 
-          racers.forEach(
-            (racer) => {
-              const currentProgress =
-                Number(
-                  racer.dataset
-                    .progress
-                );
-
-              const speed =
-                Number(
-                  racer.dataset
-                    .speed
-                );
-
-              const variation =
-                0.35 +
-                Math.random() *
-                1.55;
-
-              const boost =
-                Math.random() >
-                0.94
-                  ? 2.15
-                  : 1;
-
-              const newProgress =
-                Math.min(
-                  99,
-                  currentProgress +
-                  speed *
-                  variation *
-                  boost
-                );
-
-              racer.dataset.progress =
-                String(newProgress);
-
-              racer.style.left =
-                startingPosition +
-                (
-                  newProgress /
-                  100
-                ) *
-                maximumDistance +
-                "px";
-            }
-          );
-        }, 150);
+      setTimeout(() => {
+        notification.classList.remove(
+          "visible"
+        );
+      }, 1800);
     }
+
+    /*
+      EVENTS
+    */
 
     startRaceButton.addEventListener(
       "click",
@@ -2072,53 +2509,53 @@
         ) {
           resizeConfettiCanvas();
         }
+
+        if (!raceActive) {
+          return;
+        }
+
+        const maximumDistance =
+          getMaximumDistance();
+
+        const startingPosition =
+          getStartingPosition();
+
+        racers.forEach(
+          (racer) => {
+            const progress =
+              Number(
+                racer.dataset.progress
+              );
+
+            racer.style.left =
+              startingPosition +
+              (
+                progress /
+                100
+              ) *
+              maximumDistance +
+              "px";
+          }
+        );
       }
     );
 
-    copyContractButton
-      .addEventListener(
-        "click",
-        async () => {
-          const contractAddress =
-            contractText.textContent
-              .trim();
+    copyContractButton.addEventListener(
+      "click",
+      copyContract
+    );
 
-          try {
-            await navigator.clipboard
-              .writeText(
-                contractAddress
-              );
+    musicToggle.addEventListener(
+      "click",
+      toggleMusic
+    );
 
-            notification.textContent =
-              "Contract Copied";
-          } catch {
-            notification.textContent =
-              contractAddress;
-          }
-
-          notification.classList.add(
-            "visible"
-          );
-
-          setTimeout(() => {
-            notification.classList
-              .remove("visible");
-          }, 1800);
-        }
-      );
-
-    document
-      .querySelectorAll(
-        'a[href="#"]'
-      )
-      .forEach((link) => {
-        link.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-          }
-        );
-      });
+    telegramButton.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+      }
+    );
 
     createRaceLanes();
   </script>
