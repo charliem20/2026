@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sorteo $MEME</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #472777 0%, #151025 45%, #08070d 100%);
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 7%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #ffd43b;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    nav a:hover {
+      color: #ffd43b;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 75px 20px 45px;
+    }
+
+    .coin-logo {
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #ffd43b;
+      box-shadow: 0 0 35px rgba(255, 212, 59, 0.5);
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 75px);
+      margin-bottom: 15px;
+    }
+
+    .highlight {
+      color: #ffd43b;
+    }
+
+    .subtitle {
+      max-width: 650px;
+      margin: auto;
+      color: #d0c9df;
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .prize {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 14px 25px;
+      border-radius: 50px;
+      background: #ffd43b;
+      color: #17111f;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 35px;
+    }
+
+    .time-box {
+      width: 95px;
+      padding: 18px 10px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 31px;
+      font-weight: bold;
+      color: #ffd43b;
+    }
+
+    .time-box small {
+      color: #b9afc9;
+    }
+
+    .container {
+      width: min(1050px, 90%);
+      margin: auto;
+      padding: 45px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .card h3 {
+      color: #ffd43b;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #cfc7dc;
+      line-height: 1.5;
+    }
+
+    .form-box {
+      max-width: 650px;
+      margin: 35px auto 0;
+      background: rgba(255, 255, 255, 0.09);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button,
+    .social-button {
+      display: inline-block;
+      width: 100%;
+      margin-top: 18px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #ffd43b;
+      color: #17111f;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    button:hover,
+    .social-button:hover {
+      background: #ffe16f;
+      transform: translateY(-2px);
+    }
+
+    .secondary {
+      background: #7d45d6;
+      color: white;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 18px;
+      min-height: 24px;
+    }
+
+    .stats {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 18px;
+    }
+
+    .winner-box {
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 25px;
+      text-align: center;
+      border-radius: 18px;
+      border: 2px dashed #ffd43b;
+      background: rgba(255, 212, 59, 0.08);
+    }
+
+    #winner {
+      margin-top: 15px;
+      word-break: break-all;
+      color: #ffd43b;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #aaa1b8;
+    }
+
+    .warning {
+      max-width: 750px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255, 84, 84, 0.12);
+      color: #ffb6b6;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">$MEMECOIN</div>
+
+    <nav>
+      <a href="#requisitos">Requisitos</a>
+      <a href="#participar">Participar</a>
+      <a href="#ganador">Ganador</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <!-- Cambia esta imagen por el logo de tu memecoin -->
+      <img
+        class="coin-logo"
+        src="https://placehold.co/300x300/ffd43b/17111f?text=MEME"
+        alt="Logo de la memecoin"
+      >
+
+      <h1>
+        Gran sorteo de <span class="highlight">$MEME</span>
+      </h1>
+
+      <p class="subtitle">
+        Participa gratuitamente y gana tokens de nuestra comunidad.
+        Completa los requisitos y registra tu wallet pública.
+      </p>
+
+      <div class="prize">
+        🏆 Premio: 1,000,000 $MEME
+      </div>
+
+      <div class="countdown">
+        <div class="time-box">
+          <span id="days">00</span>
+          <small>Días</small>
+        </div>
+
+        <div class="time-box">
+          <span id="hours">00</span>
+          <small>Horas</small>
+        </div>
+
+        <div class="time-box">
+          <span id="minutes">00</span>
+          <small>Minutos</small>
+        </div>
+
+        <div class="time-box">
+          <span id="seconds">00</span>
+          <small>Segundos</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="requisitos">
+      <h2 class="section-title">¿Cómo participar?</h2>
+
+      <div class="cards">
+        <div class="card">
+          <h3>1. Seguir en X</h3>
+          <p>Sigue la cuenta oficial del proyecto en X.</p>
+        </div>
+
+        <div class="card">
+          <h3>2. Compartir</h3>
+          <p>Comparte la publicación oficial del sorteo.</p>
+        </div>
+
+        <div class="card">
+          <h3>3. Unirse a Telegram</h3>
+          <p>Únete al grupo oficial de nuestra comunidad.</p>
+        </div>
+
+        <div class="card">
+          <h3>4. Registrar wallet</h3>
+          <p>Ingresa únicamente la dirección pública de tu wallet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="participar">
+      <h2 class="section-title">Registra tu participación</h2>
+
+      <div class="form-box">
+        <!-- Cambia los enlaces por los de tu proyecto -->
+        <a
+          class="social-button secondary"
+          href="https://x.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Seguir en X
+        </a>
+
+        <a
+          class="social-button secondary"
+          href="https://t.me/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Unirse a Telegram
+        </a>
+
+        <form id="giveawayForm">
+          <label for="username">Usuario de X</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="@usuario"
+            required
+          >
+
+          <label for="wallet">Dirección pública de wallet</label>
+          <input
+            type="text"
+            id="wallet"
+            placeholder="Ejemplo: 7x4B...9LmP"
+            minlength="20"
+            required
+          >
+
+          <button type="submit">
+            Participar en el sorteo
+          </button>
+        </form>
+
+        <p class="message" id="message"></p>
+
+        <div class="stats">
+          Participantes registrados:
+          <strong id="participantCount">0</strong>
+        </div>
+      </div>
+
+      <div class="warning">
+        Nunca ingreses tu frase semilla, contraseña o clave privada.
+        El sorteo solo necesita una dirección pública.
+      </div>
+    </section>
+
+    <section class="container" id="ganador">
+      <h2 class="section-title">Resultado del sorteo</h2>
+
+      <div class="winner-box">
+        <p>El ganador aparecerá aquí cuando finalice el sorteo.</p>
+        <div id="winner">Aún no se ha seleccionado un ganador.</div>
+
+        <!-- Botón demostrativo. Elimínalo de la página pública si lo deseas. -->
+        <button id="drawButton">
+          Elegir ganador de demostración
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 $MEMECOIN — Sorteo comunitario</p>
+    <p>Este sitio nunca solicitará claves privadas ni frases semilla.</p>
+  </footer>
+
+  <script>
+    /*
+      CAMBIA AQUÍ LA FECHA DEL SORTEO.
+
+      Formato:
+      Año-Mes-DíaTHora:Minutos:Segundos
+
+      Ejemplo:
+      2026-08-15T20:00:00
+    */
+    const giveawayEndDate = new Date("2026-08-15T20:00:00").getTime();
+
+    const daysElement = document.getElementById("days");
+    const hoursElement = document.getElementById("hours");
+    const minutesElement = document.getElementById("minutes");
+    const secondsElement = document.getElementById("seconds");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = giveawayEndDate - now;
+
+      if (distance <= 0) {
+        daysElement.textContent = "00";
+        hoursElement.textContent = "00";
+        minutesElement.textContent = "00";
+        secondsElement.textContent = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor(
+        (distance % (1000 * 60)) / 1000
+      );
+
+      daysElement.textContent = String(days).padStart(2, "0");
+      hoursElement.textContent = String(hours).padStart(2, "0");
+      minutesElement.textContent = String(minutes).padStart(2, "0");
+      secondsElement.textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const form = document.getElementById("giveawayForm");
+    const message = document.getElementById("message");
+    const participantCount = document.getElementById("participantCount");
+    const drawButton = document.getElementById("drawButton");
+    const winnerElement = document.getElementById("winner");
+
+    /*
+      Esta versión guarda los datos únicamente en el navegador.
+      Es útil para pruebas, pero no sirve como base de datos pública.
+    */
+    let participants =
+      JSON.parse(localStorage.getItem("memeParticipants")) || [];
+
+    function updateParticipantCount() {
+      participantCount.textContent = participants.length;
+    }
+
+    updateParticipantCount();
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document
+        .getElementById("username")
+        .value
+        .trim();
+
+      const wallet = document
+        .getElementById("wallet")
+        .value
+        .trim();
+
+      const walletAlreadyExists = participants.some(
+        participant => participant.wallet.toLowerCase() === wallet.toLowerCase()
+      );
+
+      if (walletAlreadyExists) {
+        message.textContent = "Esta wallet ya está registrada.";
+        message.style.color = "#ff8e8e";
+        return;
+      }
+
+      participants.push({
+        username,
+        wallet,
+        registeredAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(
+        "memeParticipants",
+        JSON.stringify(participants)
+      );
+
+      updateParticipantCount();
+
+      message.textContent = "¡Participación registrada correctamente!";
+      message.style.color = "#8effad";
+
+      form.reset();
+    });
+
+    /*
+      Selección aleatoria demostrativa usando crypto.getRandomValues().
+      Para un sorteo real, publica la lista final y el método utilizado.
+    */
+    drawButton.addEventListener("click", function () {
+      if (participants.length === 0) {
+        winnerElement.textContent = "No hay participantes registrados.";
+        return;
+      }
+
+      const randomArray = new Uint32Array(1);
+      window.crypto.getRandomValues(randomArray);
+
+      const winnerIndex =
+        randomArray[0] % participants.length;
+
+      const winner = participants[winnerIndex];
+
+      winnerElement.textContent =
+        `${winner.username} — ${winner.wallet}`;
+    });
+  </script>
+
+</body>
+</html>
