@@ -15,12 +15,21 @@
 
   <title>Wallet Racers | $WRACE</title>
 
+  <!-- Prevents the favicon 404 error -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏎️</text></svg>"
+  >
+
   <style>
     :root {
       --green: #98ff00;
       --yellow: #f4ff00;
-      --black: #050705;
-      --panel: #0d130b;
+      --teal: #19e6d0;
+      --purple: #994cff;
+      --black: #040604;
+      --panel: #0b1009;
+      --panel-light: #11180e;
       --white: #f5f7f2;
       --gray: #a8b0a3;
       --border: rgba(152, 255, 0, 0.22);
@@ -38,6 +47,7 @@
 
     body {
       min-height: 100vh;
+      overflow-x: hidden;
 
       color: var(--white);
 
@@ -49,12 +59,19 @@
         ),
         radial-gradient(
           circle at bottom right,
-          rgba(0, 255, 210, 0.08),
+          rgba(25, 230, 208, 0.08),
           transparent 30%
         ),
         var(--black);
 
-      font-family: Arial, Helvetica, sans-serif;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    }
+
+    body.overlay-open {
+      overflow: hidden;
     }
 
     a {
@@ -68,7 +85,7 @@
 
     header {
       position: sticky;
-      top: 0;
+      top: 10px;
       z-index: 100;
 
       width: min(1200px, calc(100% - 24px));
@@ -80,7 +97,7 @@
       justify-content: space-between;
       gap: 20px;
 
-      background: rgba(5, 7, 5, 0.88);
+      background: rgba(4, 6, 4, 0.88);
       border: 1px solid var(--border);
       border-radius: 16px;
 
@@ -148,7 +165,10 @@
       font-weight: bold;
 
       cursor: pointer;
-      transition: 0.2s;
+      transition:
+        transform 0.2s,
+        opacity 0.2s,
+        box-shadow 0.2s;
     }
 
     .button:hover {
@@ -156,13 +176,13 @@
     }
 
     .button:disabled {
-      opacity: 0.65;
+      opacity: 0.55;
       cursor: not-allowed;
       transform: none;
     }
 
     .button-green {
-      color: #091000;
+      color: #081000;
 
       background:
         linear-gradient(
@@ -170,6 +190,9 @@
           var(--yellow),
           var(--green)
         );
+
+      box-shadow:
+        0 10px 35px rgba(152, 255, 0, 0.18);
     }
 
     .button-dark {
@@ -201,7 +224,7 @@
           90deg,
           rgba(0, 0, 0, 0.98) 0%,
           rgba(0, 0, 0, 0.88) 42%,
-          rgba(0, 0, 0, 0.30) 100%
+          rgba(0, 0, 0, 0.25) 100%
         ),
         url("banner.png") center / cover no-repeat,
         linear-gradient(135deg, #050705, #16200d);
@@ -425,11 +448,16 @@
     .track {
       position: relative;
 
-      min-height: 470px;
+      min-height: 465px;
       overflow: hidden;
       padding: 15px 45px 15px 15px;
 
       background:
+        linear-gradient(
+          90deg,
+          rgba(152, 255, 0, 0.05),
+          transparent 30%
+        ),
         repeating-linear-gradient(
           0deg,
           rgba(255, 255, 255, 0.04) 0,
@@ -474,8 +502,8 @@
       position: absolute;
       left: 140px;
 
-      width: 53px;
-      height: 39px;
+      width: 55px;
+      height: 40px;
 
       display: flex;
       align-items: center;
@@ -494,12 +522,12 @@
       border-radius: 9px;
 
       box-shadow:
-        0 0 22px rgba(152, 255, 0, 0.30);
+        0 0 22px rgba(152, 255, 0, 0.3);
 
       font-size: 18px;
       font-weight: bold;
 
-      transition: left 0.15s linear;
+      transition: left 0.14s linear;
     }
 
     .racer::before,
@@ -542,7 +570,7 @@
         ) 0 0 / 18px 18px;
     }
 
-    .winner {
+    .winner-panel {
       min-height: 85px;
       padding: 18px 25px;
 
@@ -560,17 +588,17 @@
       border-top: 1px solid var(--border);
     }
 
-    .winner-trophy {
+    .winner-trophy-small {
       font-size: 34px;
     }
 
-    .winner div:last-child {
+    .winner-panel div:last-child {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .winner span {
+    .winner-panel span {
       color: var(--gray);
 
       font-size: 10px;
@@ -626,7 +654,7 @@
       background:
         radial-gradient(
           circle at right top,
-          rgba(152, 255, 0, 0.10),
+          rgba(152, 255, 0, 0.1),
           transparent 40%
         ),
         rgba(13, 19, 11, 0.85);
@@ -697,7 +725,7 @@
       position: fixed;
       right: 20px;
       bottom: 20px;
-      z-index: 200;
+      z-index: 1500;
 
       padding: 13px 18px;
 
@@ -711,12 +739,208 @@
       opacity: 0;
       transform: translateY(15px);
 
+      pointer-events: none;
+
       transition: 0.2s;
     }
 
     .notification.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Winner celebration */
+
+    .winner-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+
+      padding: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(152, 255, 0, 0.18),
+          rgba(0, 0, 0, 0.96) 60%
+        );
+
+      backdrop-filter: blur(10px);
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition:
+        opacity 0.3s,
+        visibility 0.3s;
+    }
+
+    .winner-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    #confettiCanvas {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none;
+    }
+
+    .winner-celebration {
+      position: relative;
+      z-index: 2;
+
+      width: min(520px, 100%);
+      overflow: hidden;
+      padding: 42px 30px;
+
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(152, 255, 0, 0.2),
+          transparent 50%
+        ),
+        linear-gradient(
+          145deg,
+          #111a0d,
+          #050705
+        );
+
+      border: 2px solid var(--green);
+      border-radius: 28px;
+
+      box-shadow:
+        0 0 45px rgba(152, 255, 0, 0.27),
+        0 35px 100px rgba(0, 0, 0, 0.8);
+
+      text-align: center;
+
+      transform:
+        scale(0.6)
+        translateY(60px);
+    }
+
+    .winner-overlay.visible .winner-celebration {
+      animation:
+        winnerEntrance 0.65s
+        cubic-bezier(0.18, 0.89, 0.32, 1.28)
+        forwards;
+    }
+
+    .winner-trophy-large {
+      font-size: 105px;
+      line-height: 1;
+
+      filter:
+        drop-shadow(
+          0 0 25px rgba(244, 255, 0, 0.75)
+        );
+
+      animation:
+        trophyBounce 1s ease-in-out infinite;
+    }
+
+    .winner-label {
+      display: inline-block;
+
+      margin-top: 22px;
+      padding: 8px 16px;
+
+      color: #071000;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--yellow),
+          var(--green)
+        );
+
+      border-radius: 30px;
+
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .winner-celebration h2 {
+      margin-top: 18px;
+
+      font-size: clamp(32px, 7vw, 50px);
+      text-transform: uppercase;
+    }
+
+    .winner-celebration p {
+      margin-top: 12px;
+
+      color: var(--gray);
+    }
+
+    .winner-wallet-large {
+      display: block;
+      overflow-wrap: anywhere;
+
+      margin: 20px 0 26px;
+      padding: 17px 15px;
+
+      color: var(--green);
+
+      background: rgba(152, 255, 0, 0.08);
+      border: 1px solid rgba(152, 255, 0, 0.35);
+      border-radius: 13px;
+
+      font-family: monospace;
+      font-size: clamp(17px, 4vw, 23px);
+    }
+
+    @keyframes winnerEntrance {
+      0% {
+        opacity: 0;
+
+        transform:
+          scale(0.6)
+          translateY(60px);
+      }
+
+      65% {
+        opacity: 1;
+
+        transform:
+          scale(1.06)
+          translateY(-8px);
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          scale(1)
+          translateY(0);
+      }
+    }
+
+    @keyframes trophyBounce {
+      0%,
+      100% {
+        transform:
+          translateY(0)
+          rotate(-3deg);
+      }
+
+      50% {
+        transform:
+          translateY(-12px)
+          rotate(3deg);
+      }
     }
 
     @media (max-width: 900px) {
@@ -742,6 +966,8 @@
       .hero {
         min-height: 680px;
         align-items: end;
+
+        background-position: 72% center;
       }
 
       .hero-content {
@@ -798,6 +1024,14 @@
       .community img {
         max-width: 240px;
         margin: auto;
+      }
+
+      .winner-celebration {
+        padding: 35px 20px;
+      }
+
+      .winner-trophy-large {
+        font-size: 85px;
       }
     }
   </style>
@@ -872,7 +1106,10 @@
         <div class="contract">
           <span>CONTRACT ADDRESS</span>
 
-          <button id="copyContract">
+          <button
+            id="copyContract"
+            type="button"
+          >
             <strong id="contractText">
               COMING SOON
             </strong>
@@ -934,6 +1171,7 @@
           <button
             class="button button-green"
             id="startRace"
+            type="button"
           >
             Start Race
           </button>
@@ -943,8 +1181,8 @@
           <div class="finish-line"></div>
         </div>
 
-        <div class="winner">
-          <div class="winner-trophy">
+        <div class="winner-panel">
+          <div class="winner-trophy-small">
             🏆
           </div>
 
@@ -1026,11 +1264,6 @@
         <small>FAIR PLAY</small>
 
         <h2>Proposed Rules</h2>
-
-        <p>
-          These rules are preliminary and must be finalized
-          before real rewards are activated.
-        </p>
       </div>
 
       <div class="cards">
@@ -1060,7 +1293,7 @@
         <article class="card">
           <span class="card-number">03</span>
 
-          <h3>Blockchain Confirmation</h3>
+          <h3>Confirmation</h3>
 
           <p>
             Purchases must be successfully confirmed on the
@@ -1088,8 +1321,7 @@
           Wallet Racers will never request seed phrases,
           passwords or private keys. Real rewards should be
           sent from a separate prize wallet with a limited
-          balance. Never place a seed phrase or private key
-          inside this website or in a public GitHub repository.
+          balance.
         </p>
       </div>
     </section>
@@ -1116,25 +1348,19 @@
         </p>
 
         <div class="actions">
-
-          <!-- Replace # with your official X link. -->
           <a
             class="button button-dark"
             href="#"
-            onclick="return false"
           >
             X — Coming Soon
           </a>
 
-          <!-- Replace # with your official Telegram link. -->
           <a
             class="button button-dark"
             href="#"
-            onclick="return false"
           >
             Telegram — Coming Soon
           </a>
-
         </div>
       </div>
     </section>
@@ -1161,65 +1387,61 @@
     class="notification"
     id="notification"
   >
-    Copied
+    Contract Copied
   </div>
-<!-- Winner celebration -->
-<div
-  class="winner-overlay"
-  id="winnerOverlay"
-  aria-hidden="true"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="winnerOverlayTitle"
->
+
+  <!-- Winner celebration -->
+
   <div
-    class="confetti-container"
-    id="confettiContainer"
+    class="winner-overlay"
+    id="winnerOverlay"
     aria-hidden="true"
-  ></div>
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="winnerOverlayTitle"
+  >
+    <canvas id="confettiCanvas"></canvas>
 
-  <div class="winner-celebration">
-    <div class="winner-light"></div>
+    <div class="winner-celebration">
 
-    <div class="winner-trophy-large">
-      🏆
+      <div class="winner-trophy-large">
+        🏆
+      </div>
+
+      <span class="winner-label">
+        RACE WINNER
+      </span>
+
+      <h2 id="winnerOverlayTitle">
+        Congratulations!
+      </h2>
+
+      <p>
+        The winning wallet is:
+      </p>
+
+      <strong
+        class="winner-wallet-large"
+        id="centerWinnerWallet"
+      >
+        Waiting...
+      </strong>
+
+      <button
+        class="button button-green"
+        id="closeWinnerOverlay"
+        type="button"
+      >
+        Continue
+      </button>
+
     </div>
-
-    <span class="winner-label">
-      RACE WINNER
-    </span>
-
-    <h2 id="winnerOverlayTitle">
-      Congratulations!
-    </h2>
-
-    <p>The winning wallet is:</p>
-
-    <strong
-      class="winner-wallet-large"
-      id="centerWinnerWallet"
-    >
-      Waiting...
-    </strong>
-
-    <button
-      class="button button-green"
-      id="closeWinnerOverlay"
-      type="button"
-    >
-      Continue
-    </button>
   </div>
-</div>
+
   <script>
     /*
-      RACE DURATION
-
-      Use 20 seconds for testing:
-      const RACE_DURATION = 20;
-
-      Use 120 seconds for a two-minute race:
-      const RACE_DURATION = 120;
+      Use 20 seconds for testing.
+      Change 20 to 120 for a two-minute race.
     */
 
     const RACE_DURATION = 20;
@@ -1248,6 +1470,18 @@
     const winningWallet =
       document.getElementById("winningWallet");
 
+    const winnerOverlay =
+      document.getElementById("winnerOverlay");
+
+    const centerWinnerWallet =
+      document.getElementById("centerWinnerWallet");
+
+    const closeWinnerOverlayButton =
+      document.getElementById("closeWinnerOverlay");
+
+    const confettiCanvas =
+      document.getElementById("confettiCanvas");
+
     const copyContractButton =
       document.getElementById("copyContract");
 
@@ -1255,28 +1489,52 @@
       document.getElementById("contractText");
 
     const notification =
-  document.getElementById("notification");
+      document.getElementById("notification");
 
-const winnerOverlay =
-  document.getElementById("winnerOverlay");
+    const confettiContext =
+      confettiCanvas.getContext("2d");
 
-const centerWinnerWallet =
-  document.getElementById("centerWinnerWallet");
-
-const closeWinnerOverlayButton =
-  document.getElementById("closeWinnerOverlay");
-
-const confettiContainer =
-  document.getElementById("confettiContainer");
-
-let winnerOverlayTimeout;
     let racers = [];
-    let movementInterval;
-    let timerInterval;
+    let movementInterval = null;
+    let timerInterval = null;
+    let celebrationTimeout = null;
+    let confettiAnimation = null;
     let raceActive = false;
 
+    function formatTime(seconds) {
+      const minutes =
+        Math.floor(seconds / 60);
+
+      const remainingSeconds =
+        seconds % 60;
+
+      return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0")
+      );
+    }
+
+    function getStartingPosition() {
+      return window.innerWidth <= 650
+        ? 105
+        : 140;
+    }
+
+    function getMaximumDistance() {
+      const startingPosition =
+        getStartingPosition();
+
+      return Math.max(
+        80,
+        track.clientWidth -
+        startingPosition -
+        105
+      );
+    }
+
     function createRaceLanes() {
-      document
+      track
         .querySelectorAll(".lane")
         .forEach((lane) => lane.remove());
 
@@ -1294,7 +1552,8 @@ let winnerOverlayTimeout;
         walletLabel.className =
           "wallet-address";
 
-        walletLabel.textContent = wallet;
+        walletLabel.textContent =
+          wallet;
 
         const racer =
           document.createElement("div");
@@ -1302,14 +1561,16 @@ let winnerOverlayTimeout;
         racer.className = "racer";
         racer.textContent = "W";
 
-        racer.dataset.wallet = wallet;
-        racer.dataset.progress = "0";
+        racer.dataset.wallet =
+          wallet;
+
+        racer.dataset.progress =
+          "0";
 
         racer.dataset.speed =
           (
-            0.65 +
-            Math.random() *
-            0.7
+            0.7 +
+            Math.random() * 0.55
           ).toFixed(3);
 
         lane.appendChild(walletLabel);
@@ -1320,32 +1581,337 @@ let winnerOverlayTimeout;
       });
     }
 
-    function formatTime(seconds) {
-      const minutes =
-        Math.floor(seconds / 60);
+    function resizeConfettiCanvas() {
+      const pixelRatio =
+        window.devicePixelRatio || 1;
 
-      const remainingSeconds =
-        seconds % 60;
+      confettiCanvas.width =
+        Math.floor(
+          window.innerWidth *
+          pixelRatio
+        );
 
-      return (
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(remainingSeconds).padStart(2, "0")
+      confettiCanvas.height =
+        Math.floor(
+          window.innerHeight *
+          pixelRatio
+        );
+
+      confettiCanvas.style.width =
+        `${window.innerWidth}px`;
+
+      confettiCanvas.style.height =
+        `${window.innerHeight}px`;
+
+      confettiContext.setTransform(
+        pixelRatio,
+        0,
+        0,
+        pixelRatio,
+        0,
+        0
       );
     }
 
-    function getMaximumDistance() {
-      const startingPosition =
-        window.innerWidth <= 650
-          ? 105
-          : 140;
-
-      return Math.max(
-        80,
-        track.clientWidth -
-        startingPosition -
-        105
+    function launchConfetti() {
+      cancelAnimationFrame(
+        confettiAnimation
       );
+
+      resizeConfettiCanvas();
+
+      const colors = [
+        "#98ff00",
+        "#f4ff00",
+        "#19e6d0",
+        "#994cff",
+        "#ffffff",
+        "#ffb800"
+      ];
+
+      const particles =
+        Array.from(
+          { length: 180 },
+          () => {
+            const angle =
+              Math.random() *
+              Math.PI *
+              2;
+
+            const speed =
+              5 +
+              Math.random() *
+              13;
+
+            return {
+              x:
+                window.innerWidth /
+                2,
+
+              y:
+                window.innerHeight /
+                2,
+
+              velocityX:
+                Math.cos(angle) *
+                speed,
+
+              velocityY:
+                Math.sin(angle) *
+                speed -
+                5,
+
+              gravity:
+                0.12 +
+                Math.random() *
+                0.12,
+
+              rotation:
+                Math.random() *
+                Math.PI,
+
+              rotationSpeed:
+                -0.25 +
+                Math.random() *
+                0.5,
+
+              width:
+                5 +
+                Math.random() *
+                9,
+
+              height:
+                8 +
+                Math.random() *
+                14,
+
+              color:
+                colors[
+                  Math.floor(
+                    Math.random() *
+                    colors.length
+                  )
+                ],
+
+              opacity: 1
+            };
+          }
+        );
+
+      const animationStart =
+        performance.now();
+
+      function animateConfetti(currentTime) {
+        const elapsed =
+          currentTime -
+          animationStart;
+
+        confettiContext.clearRect(
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
+
+        particles.forEach(
+          (particle) => {
+            particle.x +=
+              particle.velocityX;
+
+            particle.y +=
+              particle.velocityY;
+
+            particle.velocityY +=
+              particle.gravity;
+
+            particle.velocityX *=
+              0.992;
+
+            particle.rotation +=
+              particle.rotationSpeed;
+
+            if (elapsed > 2800) {
+              particle.opacity -=
+                0.025;
+            }
+
+            particle.opacity =
+              Math.max(
+                0,
+                particle.opacity
+              );
+
+            confettiContext.save();
+
+            confettiContext.globalAlpha =
+              particle.opacity;
+
+            confettiContext.translate(
+              particle.x,
+              particle.y
+            );
+
+            confettiContext.rotate(
+              particle.rotation
+            );
+
+            confettiContext.fillStyle =
+              particle.color;
+
+            confettiContext.fillRect(
+              -particle.width / 2,
+              -particle.height / 2,
+              particle.width,
+              particle.height
+            );
+
+            confettiContext.restore();
+          }
+        );
+
+        if (elapsed < 4200) {
+          confettiAnimation =
+            requestAnimationFrame(
+              animateConfetti
+            );
+        } else {
+          confettiContext.clearRect(
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+          );
+        }
+      }
+
+      confettiAnimation =
+        requestAnimationFrame(
+          animateConfetti
+        );
+    }
+
+    function showWinnerCelebration(
+      wallet
+    ) {
+      clearTimeout(
+        celebrationTimeout
+      );
+
+      centerWinnerWallet.textContent =
+        wallet;
+
+      winnerOverlay.classList.add(
+        "visible"
+      );
+
+      winnerOverlay.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      document.body.classList.add(
+        "overlay-open"
+      );
+
+      launchConfetti();
+
+      celebrationTimeout =
+        setTimeout(() => {
+          closeWinnerCelebration();
+        }, 8000);
+    }
+
+    function closeWinnerCelebration() {
+      clearTimeout(
+        celebrationTimeout
+      );
+
+      cancelAnimationFrame(
+        confettiAnimation
+      );
+
+      confettiContext.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      );
+
+      winnerOverlay.classList.remove(
+        "visible"
+      );
+
+      winnerOverlay.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.classList.remove(
+        "overlay-open"
+      );
+    }
+
+    function finishRace() {
+      clearInterval(
+        movementInterval
+      );
+
+      clearInterval(
+        timerInterval
+      );
+
+      const ranking =
+        [...racers].sort(
+          (
+            firstRacer,
+            secondRacer
+          ) =>
+            Number(
+              secondRacer.dataset
+                .progress
+            ) -
+            Number(
+              firstRacer.dataset
+                .progress
+            )
+        );
+
+      const winner =
+        ranking[0];
+
+      const maximumDistance =
+        getMaximumDistance();
+
+      const startingPosition =
+        getStartingPosition();
+
+      winner.style.left =
+        startingPosition +
+        maximumDistance +
+        "px";
+
+      raceTimer.textContent =
+        "00:00";
+
+      raceStatus.textContent =
+        "FINISHED";
+
+      winningWallet.textContent =
+        winner.dataset.wallet;
+
+      startRaceButton.disabled =
+        false;
+
+      startRaceButton.textContent =
+        "Start Another Race";
+
+      raceActive = false;
+
+      setTimeout(() => {
+        showWinnerCelebration(
+          winner.dataset.wallet
+        );
+      }, 500);
     }
 
     function startRace() {
@@ -1353,11 +1919,20 @@ let winnerOverlayTimeout;
         return;
       }
 
+      clearInterval(
+        movementInterval
+      );
+
+      clearInterval(
+        timerInterval
+      );
+
       createRaceLanes();
 
       raceActive = true;
 
-      startRaceButton.disabled = true;
+      startRaceButton.disabled =
+        true;
 
       startRaceButton.textContent =
         "Race in Progress";
@@ -1372,224 +1947,83 @@ let winnerOverlayTimeout;
         RACE_DURATION;
 
       raceTimer.textContent =
-        formatTime(remainingTime);
-
-      const maximumDistance =
-        getMaximumDistance();
-
-      timerInterval = setInterval(() => {
-        remainingTime--;
-
-        raceTimer.textContent =
-          formatTime(
-            Math.max(remainingTime, 0)
-          );
-
-        if (remainingTime <= 0) {
-          clearInterval(timerInterval);
-          finishRace();
-        }
-      }, 1000);
-
-      movementInterval = setInterval(() => {
-        racers.forEach((racer) => {
-          const currentProgress =
-            Number(
-              racer.dataset.progress
-            );
-
-          const speed =
-            Number(
-              racer.dataset.speed
-            );
-
-          const variation =
-            0.3 +
-            Math.random() *
-            1.5;
-
-          const boost =
-            Math.random() > 0.94
-              ? 2.2
-              : 1;
-
-          const newProgress =
-            Math.min(
-              99,
-              currentProgress +
-              speed *
-              variation *
-              boost
-            );
-
-          racer.dataset.progress =
-            String(newProgress);
-
-          const startingPosition =
-            window.innerWidth <= 650
-              ? 105
-              : 140;
-
-          racer.style.left =
-            startingPosition +
-            (
-              newProgress /
-              100
-            ) *
-            maximumDistance +
-            "px";
-        });
-      }, 150);
-    }
-function createConfettiExplosion() {
-  confettiContainer.innerHTML = "";
-
-  const colors = [
-    "#98ff00",
-    "#f4ff00",
-    "#22e3d1",
-    "#9d4dff",
-    "#ffffff",
-    "#ffb800"
-  ];
-
-  for (let i = 0; i < 140; i++) {
-    const piece = document.createElement("span");
-
-    piece.className = "confetti-piece";
-
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 180 + Math.random() * 600;
-
-    piece.style.setProperty(
-      "--confetti-x",
-      `${Math.cos(angle) * distance}px`
-    );
-
-    piece.style.setProperty(
-      "--confetti-y",
-      `${Math.sin(angle) * distance + Math.random() * 250}px`
-    );
-
-    piece.style.setProperty(
-      "--confetti-width",
-      `${6 + Math.random() * 8}px`
-    );
-
-    piece.style.setProperty(
-      "--confetti-height",
-      `${9 + Math.random() * 15}px`
-    );
-
-    piece.style.setProperty(
-      "--confetti-duration",
-      `${1.4 + Math.random() * 1.7}s`
-    );
-
-    piece.style.setProperty(
-      "--confetti-delay",
-      `${Math.random() * 0.18}s`
-    );
-
-    piece.style.setProperty(
-      "--confetti-rotation",
-      `${360 + Math.random() * 1080}deg`
-    );
-
-    piece.style.setProperty(
-      "--confetti-color",
-      colors[Math.floor(Math.random() * colors.length)]
-    );
-
-    confettiContainer.appendChild(piece);
-  }
-}
-
-function showWinnerCelebration(wallet) {
-  clearTimeout(winnerOverlayTimeout);
-
-  centerWinnerWallet.textContent = wallet;
-
-  winnerOverlay.classList.add("visible");
-
-  winnerOverlay.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-  document.body.style.overflow = "hidden";
-
-  createConfettiExplosion();
-
-  winnerOverlayTimeout = setTimeout(() => {
-    closeWinnerCelebration();
-  }, 7000);
-}
-
-function closeWinnerCelebration() {
-  clearTimeout(winnerOverlayTimeout);
-
-  winnerOverlay.classList.remove("visible");
-
-  winnerOverlay.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.style.overflow = "";
-
-  setTimeout(() => {
-    confettiContainer.innerHTML = "";
-  }, 400);
-}
-    function finishRace() {
-      clearInterval(movementInterval);
-
-      const ranking =
-        [...racers].sort(
-          (firstRacer, secondRacer) =>
-            Number(
-              secondRacer.dataset.progress
-            ) -
-            Number(
-              firstRacer.dataset.progress
-            )
+        formatTime(
+          remainingTime
         );
 
-      const winner =
-        ranking[0];
+      timerInterval =
+        setInterval(() => {
+          remainingTime -= 1;
 
-      const maximumDistance =
-        getMaximumDistance();
+          raceTimer.textContent =
+            formatTime(
+              Math.max(
+                remainingTime,
+                0
+              )
+            );
 
-      const startingPosition =
-        window.innerWidth <= 650
-          ? 105
-          : 140;
+          if (remainingTime <= 0) {
+            finishRace();
+          }
+        }, 1000);
 
-      winner.style.left =
-        startingPosition +
-        maximumDistance +
-        "px";
+      movementInterval =
+        setInterval(() => {
+          const maximumDistance =
+            getMaximumDistance();
 
-      raceStatus.textContent =
-        "FINISHED";
+          const startingPosition =
+            getStartingPosition();
 
-      winningWallet.textContent =
-        winner.dataset.wallet;
-setTimeout(() => {
-  showWinnerCelebration(
-    winner.dataset.wallet
-  );
-}, 450);
-      
+          racers.forEach(
+            (racer) => {
+              const currentProgress =
+                Number(
+                  racer.dataset
+                    .progress
+                );
 
-      startRaceButton.disabled = false;
+              const speed =
+                Number(
+                  racer.dataset
+                    .speed
+                );
 
-      startRaceButton.textContent =
-        "Start Another Race";
+              const variation =
+                0.35 +
+                Math.random() *
+                1.55;
 
-      raceActive = false;
+              const boost =
+                Math.random() >
+                0.94
+                  ? 2.15
+                  : 1;
+
+              const newProgress =
+                Math.min(
+                  99,
+                  currentProgress +
+                  speed *
+                  variation *
+                  boost
+                );
+
+              racer.dataset.progress =
+                String(newProgress);
+
+              racer.style.left =
+                startingPosition +
+                (
+                  newProgress /
+                  100
+                ) *
+                maximumDistance +
+                "px";
+            }
+          );
+        }, 150);
     }
 
     startRaceButton.addEventListener(
@@ -1597,63 +2031,95 @@ setTimeout(() => {
       startRace
     );
 
-    copyContractButton.addEventListener(
+    closeWinnerOverlayButton
+      .addEventListener(
+        "click",
+        closeWinnerCelebration
+      );
+
+    winnerOverlay.addEventListener(
       "click",
-      async () => {
-        const contractAddress =
-          contractText.textContent.trim();
-
-        try {
-          await navigator.clipboard.writeText(
-            contractAddress
-          );
-
-          notification.textContent =
-            "Contract Copied";
-        } catch {
-          notification.textContent =
-            contractAddress;
+      (event) => {
+        if (
+          event.target ===
+          winnerOverlay
+        ) {
+          closeWinnerCelebration();
         }
-
-        notification.classList.add(
-          "visible"
-        );
-
-        setTimeout(() => {
-          notification.classList.remove(
-            "visible"
-          );
-        }, 1800);
       }
     );
 
-    closeWinnerOverlayButton.addEventListener(
-  "click",
-  closeWinnerCelebration
-);
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Escape" &&
+          winnerOverlay.classList
+            .contains("visible")
+        ) {
+          closeWinnerCelebration();
+        }
+      }
+    );
 
-winnerOverlay.addEventListener(
-  "click",
-  (event) => {
-    if (event.target === winnerOverlay) {
-      closeWinnerCelebration();
-    }
-  }
-);
+    window.addEventListener(
+      "resize",
+      () => {
+        if (
+          winnerOverlay.classList
+            .contains("visible")
+        ) {
+          resizeConfettiCanvas();
+        }
+      }
+    );
 
-document.addEventListener(
-  "keydown",
-  (event) => {
-    if (
-      event.key === "Escape" &&
-      winnerOverlay.classList.contains("visible")
-    ) {
-      closeWinnerCelebration();
-    }
-  }
-);
+    copyContractButton
+      .addEventListener(
+        "click",
+        async () => {
+          const contractAddress =
+            contractText.textContent
+              .trim();
 
-createRaceLanes();
+          try {
+            await navigator.clipboard
+              .writeText(
+                contractAddress
+              );
+
+            notification.textContent =
+              "Contract Copied";
+          } catch {
+            notification.textContent =
+              contractAddress;
+          }
+
+          notification.classList.add(
+            "visible"
+          );
+
+          setTimeout(() => {
+            notification.classList
+              .remove("visible");
+          }, 1800);
+        }
+      );
+
+    document
+      .querySelectorAll(
+        'a[href="#"]'
+      )
+      .forEach((link) => {
+        link.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+          }
+        );
+      });
+
+    createRaceLanes();
   </script>
 
 </body>
