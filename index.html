@@ -1163,7 +1163,54 @@
   >
     Copied
   </div>
+<!-- Winner celebration -->
+<div
+  class="winner-overlay"
+  id="winnerOverlay"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="winnerOverlayTitle"
+>
+  <div
+    class="confetti-container"
+    id="confettiContainer"
+    aria-hidden="true"
+  ></div>
 
+  <div class="winner-celebration">
+    <div class="winner-light"></div>
+
+    <div class="winner-trophy-large">
+      🏆
+    </div>
+
+    <span class="winner-label">
+      RACE WINNER
+    </span>
+
+    <h2 id="winnerOverlayTitle">
+      Congratulations!
+    </h2>
+
+    <p>The winning wallet is:</p>
+
+    <strong
+      class="winner-wallet-large"
+      id="centerWinnerWallet"
+    >
+      Waiting...
+    </strong>
+
+    <button
+      class="button button-green"
+      id="closeWinnerOverlay"
+      type="button"
+    >
+      Continue
+    </button>
+  </div>
+</div>
   <script>
     /*
       RACE DURATION
