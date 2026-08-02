@@ -1441,7 +1441,107 @@ let winnerOverlayTimeout;
         });
       }, 150);
     }
+function createConfettiExplosion() {
+  confettiContainer.innerHTML = "";
 
+  const colors = [
+    "#98ff00",
+    "#f4ff00",
+    "#22e3d1",
+    "#9d4dff",
+    "#ffffff",
+    "#ffb800"
+  ];
+
+  for (let i = 0; i < 140; i++) {
+    const piece = document.createElement("span");
+
+    piece.className = "confetti-piece";
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 180 + Math.random() * 600;
+
+    piece.style.setProperty(
+      "--confetti-x",
+      `${Math.cos(angle) * distance}px`
+    );
+
+    piece.style.setProperty(
+      "--confetti-y",
+      `${Math.sin(angle) * distance + Math.random() * 250}px`
+    );
+
+    piece.style.setProperty(
+      "--confetti-width",
+      `${6 + Math.random() * 8}px`
+    );
+
+    piece.style.setProperty(
+      "--confetti-height",
+      `${9 + Math.random() * 15}px`
+    );
+
+    piece.style.setProperty(
+      "--confetti-duration",
+      `${1.4 + Math.random() * 1.7}s`
+    );
+
+    piece.style.setProperty(
+      "--confetti-delay",
+      `${Math.random() * 0.18}s`
+    );
+
+    piece.style.setProperty(
+      "--confetti-rotation",
+      `${360 + Math.random() * 1080}deg`
+    );
+
+    piece.style.setProperty(
+      "--confetti-color",
+      colors[Math.floor(Math.random() * colors.length)]
+    );
+
+    confettiContainer.appendChild(piece);
+  }
+}
+
+function showWinnerCelebration(wallet) {
+  clearTimeout(winnerOverlayTimeout);
+
+  centerWinnerWallet.textContent = wallet;
+
+  winnerOverlay.classList.add("visible");
+
+  winnerOverlay.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  document.body.style.overflow = "hidden";
+
+  createConfettiExplosion();
+
+  winnerOverlayTimeout = setTimeout(() => {
+    closeWinnerCelebration();
+  }, 7000);
+}
+
+function closeWinnerCelebration() {
+  clearTimeout(winnerOverlayTimeout);
+
+  winnerOverlay.classList.remove("visible");
+
+  winnerOverlay.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.style.overflow = "";
+
+  setTimeout(() => {
+    confettiContainer.innerHTML = "";
+  }, 400);
+}
     function finishRace() {
       clearInterval(movementInterval);
 
