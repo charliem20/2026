@@ -1208,8 +1208,21 @@
       document.getElementById("contractText");
 
     const notification =
-      document.getElementById("notification");
+  document.getElementById("notification");
 
+const winnerOverlay =
+  document.getElementById("winnerOverlay");
+
+const centerWinnerWallet =
+  document.getElementById("centerWinnerWallet");
+
+const closeWinnerOverlayButton =
+  document.getElementById("closeWinnerOverlay");
+
+const confettiContainer =
+  document.getElementById("confettiContainer");
+
+let winnerOverlayTimeout;
     let racers = [];
     let movementInterval;
     let timerInterval;
