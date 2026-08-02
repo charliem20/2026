@@ -25,10 +25,8 @@
       --green: #98ff00;
       --yellow: #f4ff00;
       --teal: #19e6d0;
-      --purple: #994cff;
       --black: #040604;
       --panel: #0b1009;
-      --panel-light: #11180e;
       --white: #f5f7f2;
       --gray: #a8b0a3;
       --border: rgba(152, 255, 0, 0.22);
@@ -110,6 +108,7 @@
     .brand img {
       width: 48px;
       height: 48px;
+
       object-fit: cover;
 
       border: 1px solid var(--border);
@@ -118,12 +117,14 @@
 
     .brand strong {
       display: block;
+
       font-size: 15px;
       letter-spacing: 1px;
     }
 
     .brand span {
       color: var(--green);
+
       font-size: 13px;
       font-weight: bold;
     }
@@ -135,6 +136,7 @@
 
     nav a {
       color: #dce2d8;
+
       font-size: 14px;
       font-weight: bold;
     }
@@ -175,7 +177,7 @@
     }
 
     .button:disabled {
-      opacity: 0.55;
+      opacity: 0.62;
       cursor: not-allowed;
       transform: none;
     }
@@ -745,8 +747,6 @@
       transform: translateY(0);
     }
 
-    /* Winner celebration */
-
     .winner-overlay {
       position: fixed;
       inset: 0;
@@ -1155,8 +1155,8 @@
       </article>
 
       <article>
-        <strong>COMMUNITY</strong>
-        <span>Community entertainment</span>
+        <strong>AUTO RACE</strong>
+        <span>New round after 10 seconds</span>
       </article>
     </div>
 
@@ -1168,8 +1168,8 @@
 
         <p>
           This demonstration currently uses fictional wallet addresses.
-          Racers advance with the timer and the winner reaches the finish
-          line when the clock reaches 00:00.
+          Racers advance with the timer. The winner reaches the finish
+          line at 00:00, and the next race begins automatically.
         </p>
       </div>
 
@@ -1266,11 +1266,11 @@
         <article class="card">
           <span class="card-number">04</span>
 
-          <h3>Verifiable Result</h3>
+          <h3>Automatic Restart</h3>
 
           <p>
-            The winning wallet and reward transaction can later
-            be displayed publicly and verified on-chain.
+            After the winner is shown, the next race starts
+            automatically after a ten-second countdown.
           </p>
         </article>
 
@@ -1365,6 +1365,7 @@
         </p>
 
         <div class="actions">
+
           <a
             class="button button-dark"
             href="https://x.com/WalletRacersSol"
@@ -1381,6 +1382,7 @@
           >
             Telegram — Coming Soon
           </a>
+
         </div>
       </div>
     </section>
@@ -1409,8 +1411,6 @@
   >
     Contract Copied
   </div>
-
-  <!-- Winner celebration -->
 
   <div
     class="winner-overlay"
@@ -1458,9 +1458,6 @@
     </div>
   </div>
 
-  <!-- Optional background music -->
-  <!-- Upload a file named music.mp3 to the repository. -->
-
   <audio
     id="backgroundMusic"
     src="music.mp3"
@@ -1470,16 +1467,17 @@
 
   <script>
     /*
-      RACE CONFIGURATION
-      120 seconds = 2 minutes.
+      RACE SETTINGS
     */
 
     const RACE_DURATION = 120;
+    const NEXT_RACE_DELAY = 10;
 
     /*
-      These are demonstration wallets.
-      They will later be replaced by real eligible wallets
-      received from a secure backend.
+      DEMONSTRATION WALLETS
+
+      These will later be replaced by real eligible wallets
+      provided by a secure blockchain backend.
     */
 
     const demoWallets = [
@@ -1544,12 +1542,17 @@
     let racers = [];
     let raceActive = false;
     let raceAnimationFrame = null;
+
     let celebrationTimeout = null;
     let confettiAnimation = null;
+
     let selectedWinnerIndex = null;
     let finalTargets = [];
-    let musicEnabled = false;
+
     let audioContext = null;
+
+    let autoRestartTimeout = null;
+    let autoRestartInterval = null;
 
     function formatTime(seconds) {
       const minutes =
@@ -1586,69 +1589,69 @@
     function createRaceLanes() {
       track
         .querySelectorAll(".lane")
-        .forEach((lane) => lane.remove());
+        .forEach((lane) => {
+          lane.remove();
+        });
 
       racers = [];
 
-      demoWallets.forEach(
-        (wallet, index) => {
-          const lane =
-            document.createElement("div");
+      demoWallets.forEach((wallet) => {
+        const lane =
+          document.createElement("div");
 
-          lane.className = "lane";
+        lane.className = "lane";
 
-          const walletLabel =
-            document.createElement("div");
+        const walletLabel =
+          document.createElement("div");
 
-          walletLabel.className =
-            "wallet-address";
+        walletLabel.className =
+          "wallet-address";
 
-          walletLabel.textContent =
-            wallet;
+        walletLabel.textContent =
+          wallet;
 
-          const racer =
-            document.createElement("div");
+        const racer =
+          document.createElement("div");
 
-          racer.className = "racer";
-          racer.textContent = "W";
+        racer.className = "racer";
+        racer.textContent = "W";
 
-          racer.dataset.wallet =
-            wallet;
+        racer.dataset.wallet =
+          wallet;
 
-          racer.dataset.progress =
-            "0";
+        racer.dataset.progress =
+          "0";
 
-          racer.dataset.phase =
-            String(
-              Math.random() *
-              Math.PI *
-              2
-            );
-
-          racer.dataset.waveSpeed =
-            String(
-              0.75 +
-              Math.random() *
-              0.65
-            );
-
-          lane.appendChild(
-            walletLabel
+        racer.dataset.phase =
+          String(
+            Math.random() *
+            Math.PI *
+            2
           );
 
-          lane.appendChild(
-            racer
+        racer.dataset.waveSpeed =
+          String(
+            0.75 +
+            Math.random() *
+            0.65
           );
 
-          track.appendChild(
-            lane
-          );
+        lane.appendChild(
+          walletLabel
+        );
 
-          racers.push(
-            racer
-          );
-        }
-      );
+        lane.appendChild(
+          racer
+        );
+
+        track.appendChild(
+          lane
+        );
+
+        racers.push(
+          racer
+        );
+      });
     }
 
     function createFinalTargets() {
@@ -1702,23 +1705,90 @@
     }
 
     function easeRaceProgress(value) {
-      /*
-        Smooth acceleration and finish.
-        The value always reaches exactly 1
-        when the timer reaches zero.
-      */
-
-      return 1 -
+      return (
+        1 -
         Math.pow(
           1 - value,
           1.42
+        )
+      );
+    }
+
+    function clearAutoRestart() {
+      clearTimeout(
+        autoRestartTimeout
+      );
+
+      clearInterval(
+        autoRestartInterval
+      );
+
+      autoRestartTimeout = null;
+      autoRestartInterval = null;
+    }
+
+    function scheduleNextRace() {
+      clearAutoRestart();
+
+      const restartAt =
+        Date.now() +
+        NEXT_RACE_DELAY *
+        1000;
+
+      startRaceButton.disabled =
+        true;
+
+      raceStatus.textContent =
+        "FINISHED";
+
+      function updateCountdown() {
+        const millisecondsLeft =
+          Math.max(
+            restartAt -
+            Date.now(),
+            0
+          );
+
+        const secondsLeft =
+          Math.ceil(
+            millisecondsLeft /
+            1000
+          );
+
+        startRaceButton.textContent =
+          `Next Race in ${secondsLeft}s`;
+
+        if (secondsLeft <= 0) {
+          clearInterval(
+            autoRestartInterval
+          );
+        }
+      }
+
+      updateCountdown();
+
+      autoRestartInterval =
+        setInterval(
+          updateCountdown,
+          250
         );
+
+      autoRestartTimeout =
+        setTimeout(() => {
+          clearAutoRestart();
+
+          closeWinnerCelebration();
+
+          startRace();
+        }, NEXT_RACE_DELAY * 1000);
     }
 
     function startRace() {
       if (raceActive) {
         return;
       }
+
+      clearAutoRestart();
 
       cancelAnimationFrame(
         raceAnimationFrame
@@ -1749,7 +1819,8 @@
       playRaceStartSound();
 
       const totalDuration =
-        RACE_DURATION * 1000;
+        RACE_DURATION *
+        1000;
 
       const raceStartTime =
         performance.now();
@@ -1813,23 +1884,23 @@
 
             const waveSpeed =
               Number(
-                racer.dataset
-                  .waveSpeed
+                racer.dataset.waveSpeed
               );
 
-            /*
-              The variation becomes smaller as
-              the race approaches the finish.
-            */
-
             const variationStrength =
-              (1 - racePercentage) *
+              (
+                1 -
+                racePercentage
+              ) *
               1.8;
 
             const wave =
               Math.sin(
                 elapsedTime /
-                (520 / waveSpeed) +
+                (
+                  520 /
+                  waveSpeed
+                ) +
                 phase
               ) *
               variationStrength;
@@ -1840,8 +1911,8 @@
               wave;
 
             /*
-              The winning wallet cannot touch
-              the finish line before 00:00.
+              Nobody reaches the finish line
+              before the timer reaches 00:00.
             */
 
             if (
@@ -1867,7 +1938,9 @@
               );
 
             racer.dataset.progress =
-              String(progress);
+              String(
+                progress
+              );
 
             racer.style.left =
               startingPosition +
@@ -1953,10 +2026,7 @@
         winner.dataset.wallet;
 
       startRaceButton.disabled =
-        false;
-
-      startRaceButton.textContent =
-        "Start Another Race";
+        true;
 
       playWinnerSound();
 
@@ -1965,11 +2035,9 @@
           winner.dataset.wallet
         );
       }, 450);
-    }
 
-    /*
-      CONFETTI
-    */
+      scheduleNextRace();
+    }
 
     function resizeConfettiCanvas() {
       const pixelRatio =
@@ -2244,10 +2312,6 @@
       );
     }
 
-    /*
-      SOUND EFFECTS
-    */
-
     function getAudioContext() {
       if (!audioContext) {
         const AudioContextClass =
@@ -2376,10 +2440,6 @@
       );
     }
 
-    /*
-      MUSIC
-    */
-
     async function toggleMusic() {
       if (
         backgroundMusic.paused
@@ -2387,29 +2447,19 @@
         try {
           await backgroundMusic.play();
 
-          musicEnabled = true;
-
           musicToggle.textContent =
             "🔊 Music On";
         } catch (error) {
-          musicEnabled = false;
-
           musicToggle.textContent =
             "Music Unavailable";
         }
       } else {
         backgroundMusic.pause();
 
-        musicEnabled = false;
-
         musicToggle.textContent =
           "🔇 Music Off";
       }
     }
-
-    /*
-      COPY CONTRACT
-    */
 
     async function copyContract() {
       const contractAddress =
@@ -2421,9 +2471,6 @@
           .writeText(
             contractAddress
           );
-
-        notification.textContent =
-          "Contract Copied";
       } catch (error) {
         const temporaryInput =
           document.createElement(
@@ -2444,10 +2491,10 @@
         );
 
         temporaryInput.remove();
-
-        notification.textContent =
-          "Contract Copied";
       }
+
+      notification.textContent =
+        "Contract Copied";
 
       notification.classList.add(
         "visible"
@@ -2460,20 +2507,15 @@
       }, 1800);
     }
 
-    /*
-      EVENTS
-    */
-
     startRaceButton.addEventListener(
       "click",
       startRace
     );
 
-    closeWinnerOverlayButton
-      .addEventListener(
-        "click",
-        closeWinnerCelebration
-      );
+    closeWinnerOverlayButton.addEventListener(
+      "click",
+      closeWinnerCelebration
+    );
 
     winnerOverlay.addEventListener(
       "click",
@@ -2508,10 +2550,6 @@
             .contains("visible")
         ) {
           resizeConfettiCanvas();
-        }
-
-        if (!raceActive) {
-          return;
         }
 
         const maximumDistance =
@@ -2554,6 +2592,14 @@
       "click",
       (event) => {
         event.preventDefault();
+      }
+    );
+
+    backgroundMusic.addEventListener(
+      "error",
+      () => {
+        musicToggle.textContent =
+          "Music Unavailable";
       }
     );
 
