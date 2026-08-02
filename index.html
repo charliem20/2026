@@ -1461,7 +1461,33 @@
       }
     );
 
-    createRaceLanes();
+    closeWinnerOverlayButton.addEventListener(
+  "click",
+  closeWinnerCelebration
+);
+
+winnerOverlay.addEventListener(
+  "click",
+  (event) => {
+    if (event.target === winnerOverlay) {
+      closeWinnerCelebration();
+    }
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (
+      event.key === "Escape" &&
+      winnerOverlay.classList.contains("visible")
+    ) {
+      closeWinnerCelebration();
+    }
+  }
+);
+
+createRaceLanes();
   </script>
 
 </body>
