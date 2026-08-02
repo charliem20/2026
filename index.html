@@ -1577,6 +1577,12 @@ function closeWinnerCelebration() {
 
       winningWallet.textContent =
         winner.dataset.wallet;
+setTimeout(() => {
+  showWinnerCelebration(
+    winner.dataset.wallet
+  );
+}, 450);
+      
 
       startRaceButton.disabled = false;
 
