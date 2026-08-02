@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Wallet Racers is a community memecoin project built on Solana."
+  >
 
   <title>Wallet Racers | $WRACE</title>
 
   <style>
     :root {
-      --verde: #98ff00;
-      --amarillo: #f4ff00;
-      --negro: #050705;
+      --green: #98ff00;
+      --yellow: #f4ff00;
+      --black: #050705;
       --panel: #0d130b;
-      --blanco: #f5f7f2;
-      --gris: #a8b0a3;
-      --borde: rgba(152, 255, 0, 0.22);
+      --white: #f5f7f2;
+      --gray: #a8b0a3;
+      --border: rgba(152, 255, 0, 0.22);
     }
 
     * {
@@ -28,19 +37,33 @@
     }
 
     body {
-      background:
-        radial-gradient(circle at top left, rgba(152,255,0,.12), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(0,255,210,.08), transparent 30%),
-        var(--negro);
-
-      color: var(--blanco);
-      font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
+
+      color: var(--white);
+
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(152, 255, 0, 0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at bottom right,
+          rgba(0, 255, 210, 0.08),
+          transparent 30%
+        ),
+        var(--black);
+
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
     }
 
     header {
@@ -58,33 +81,38 @@
       gap: 20px;
 
       background: rgba(5, 7, 5, 0.88);
-      border: 1px solid var(--borde);
+      border: 1px solid var(--border);
       border-radius: 16px;
+
       backdrop-filter: blur(15px);
     }
 
-    .marca {
+    .brand {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .marca img {
+    .brand img {
       width: 48px;
       height: 48px;
+
       object-fit: cover;
+
+      border: 1px solid var(--border);
       border-radius: 12px;
-      border: 1px solid var(--borde);
     }
 
-    .marca strong {
+    .brand strong {
       display: block;
+
       font-size: 15px;
       letter-spacing: 1px;
     }
 
-    .marca span {
-      color: var(--verde);
+    .brand span {
+      color: var(--green);
+
       font-size: 13px;
       font-weight: bold;
     }
@@ -96,44 +124,59 @@
 
     nav a {
       color: #dce2d8;
+
       font-size: 14px;
       font-weight: bold;
     }
 
     nav a:hover {
-      color: var(--verde);
+      color: var(--green);
     }
 
-    .boton {
+    .button {
       min-height: 46px;
       padding: 0 20px;
 
       display: inline-flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
 
       border: none;
       border-radius: 11px;
-      cursor: pointer;
 
       font-size: 14px;
       font-weight: bold;
+
+      cursor: pointer;
       transition: 0.2s;
     }
 
-    .boton:hover {
+    .button:hover {
       transform: translateY(-2px);
     }
 
-    .boton-verde {
-      color: #091000;
-      background: linear-gradient(135deg, var(--amarillo), var(--verde));
+    .button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .boton-oscuro {
+    .button-green {
+      color: #091000;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--yellow),
+          var(--green)
+        );
+    }
+
+    .button-dark {
       color: white;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
+
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     main {
@@ -143,42 +186,46 @@
 
     .hero {
       position: relative;
+
       min-height: 620px;
       overflow: hidden;
 
       display: flex;
       align-items: center;
 
-      border: 1px solid var(--borde);
+      border: 1px solid var(--border);
       border-radius: 28px;
 
       background:
         linear-gradient(
           90deg,
-          rgba(0,0,0,.98) 0%,
-          rgba(0,0,0,.88) 42%,
-          rgba(0,0,0,.30) 100%
+          rgba(0, 0, 0, 0.98) 0%,
+          rgba(0, 0, 0, 0.88) 42%,
+          rgba(0, 0, 0, 0.30) 100%
         ),
-        url("banner.png") center/cover no-repeat,
+        url("banner.png") center / cover no-repeat,
         linear-gradient(135deg, #050705, #16200d);
     }
 
-    .hero-contenido {
+    .hero-content {
       position: relative;
       z-index: 2;
+
       max-width: 650px;
       padding: 65px;
     }
 
-    .etiqueta {
+    .tag {
       display: inline-block;
+
       margin-bottom: 20px;
       padding: 9px 14px;
 
       color: #cffff9;
-      border: 1px solid rgba(0,255,220,.35);
+
+      background: rgba(0, 255, 220, 0.08);
+      border: 1px solid rgba(0, 255, 220, 0.35);
       border-radius: 30px;
-      background: rgba(0,255,220,.08);
 
       font-size: 12px;
       font-weight: bold;
@@ -187,85 +234,95 @@
 
     h1 {
       font-size: clamp(45px, 7vw, 80px);
-      line-height: .95;
+      line-height: 0.95;
       text-transform: uppercase;
     }
 
     h1 span {
-      color: var(--verde);
+      color: var(--green);
     }
 
     .hero p {
-      margin-top: 24px;
       max-width: 600px;
+      margin-top: 24px;
+
       color: #d1d8cd;
+
       font-size: 17px;
       line-height: 1.7;
     }
 
-    .acciones {
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+
       margin-top: 28px;
     }
 
-    .contrato {
+    .contract {
       max-width: 520px;
       margin-top: 28px;
     }
 
-    .contrato > span {
+    .contract > span {
       display: block;
+
       margin-bottom: 8px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       font-size: 11px;
       font-weight: bold;
       letter-spacing: 1px;
     }
 
-    .contrato button {
+    .contract button {
       width: 100%;
       min-height: 58px;
       padding: 0 16px;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 15px;
 
       color: white;
-      background: rgba(10,15,8,.92);
-      border: 1px solid var(--borde);
+
+      background: rgba(10, 15, 8, 0.92);
+      border: 1px solid var(--border);
       border-radius: 12px;
+
       cursor: pointer;
     }
 
-    .contrato strong {
+    .contract strong {
       overflow: hidden;
+
+      font-family: monospace;
+
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-family: monospace;
     }
 
-    .contrato button span {
-      color: var(--verde);
+    .contract button span {
+      color: var(--green);
       font-weight: bold;
     }
 
-    .estadisticas {
+    .statistics {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
 
       margin-top: 18px;
       overflow: hidden;
 
-      border: 1px solid var(--borde);
+      background: rgba(13, 19, 11, 0.85);
+      border: 1px solid var(--border);
       border-radius: 18px;
-      background: rgba(13,19,11,.85);
     }
 
-    .estadisticas article {
+    .statistics article {
       min-height: 110px;
       padding: 25px;
 
@@ -273,21 +330,23 @@
       flex-direction: column;
       justify-content: center;
 
-      border-right: 1px solid var(--borde);
+      border-right: 1px solid var(--border);
     }
 
-    .estadisticas article:last-child {
+    .statistics article:last-child {
       border-right: none;
     }
 
-    .estadisticas strong {
-      color: var(--verde);
+    .statistics strong {
+      color: var(--green);
       font-size: 21px;
     }
 
-    .estadisticas span {
+    .statistics span {
       margin-top: 7px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       font-size: 13px;
     }
 
@@ -295,36 +354,41 @@
       padding: 100px 0 10px;
     }
 
-    .titulo-seccion {
+    .section-title {
       margin-bottom: 35px;
     }
 
-    .titulo-seccion small {
-      color: var(--verde);
+    .section-title small {
+      color: var(--green);
+
       font-weight: bold;
       letter-spacing: 1.5px;
     }
 
-    .titulo-seccion h2 {
+    .section-title h2 {
       margin-top: 10px;
+
       font-size: clamp(34px, 5vw, 55px);
     }
 
-    .titulo-seccion p {
+    .section-title p {
       max-width: 700px;
       margin-top: 15px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       line-height: 1.7;
     }
 
-    .carrera {
+    .race {
       overflow: hidden;
-      border: 1px solid var(--borde);
+
+      background: rgba(8, 12, 7, 0.94);
+      border: 1px solid var(--border);
       border-radius: 24px;
-      background: rgba(8,12,7,.94);
     }
 
-    .carrera-cabecera {
+    .race-header {
       min-height: 95px;
       padding: 20px 25px;
 
@@ -332,33 +396,35 @@
       align-items: center;
       gap: 35px;
 
-      border-bottom: 1px solid var(--borde);
+      border-bottom: 1px solid var(--border);
     }
 
-    .dato {
+    .race-data {
       display: flex;
       flex-direction: column;
       gap: 5px;
     }
 
-    .dato span {
-      color: var(--gris);
+    .race-data span {
+      color: var(--gray);
+
       font-size: 10px;
       font-weight: bold;
       letter-spacing: 1px;
     }
 
-    .dato strong {
-      color: var(--verde);
+    .race-data strong {
+      color: var(--green);
       font-size: 19px;
     }
 
-    .temporizador {
+    .race-timer {
       margin-right: auto;
     }
 
-    .pista {
+    .track {
       position: relative;
+
       min-height: 470px;
       overflow: hidden;
       padding: 15px 45px 15px 15px;
@@ -366,22 +432,26 @@
       background:
         repeating-linear-gradient(
           0deg,
-          rgba(255,255,255,.04) 0,
-          rgba(255,255,255,.04) 1px,
+          rgba(255, 255, 255, 0.04) 0,
+          rgba(255, 255, 255, 0.04) 1px,
           transparent 1px,
           transparent 75px
         );
     }
 
-    .carril {
+    .lane {
       position: relative;
+
       height: 72px;
+
       display: flex;
       align-items: center;
-      border-bottom: 1px dashed rgba(255,255,255,.12);
+
+      border-bottom:
+        1px dashed rgba(255, 255, 255, 0.12);
     }
 
-    .wallet {
+    .wallet-address {
       position: absolute;
       left: 8px;
       z-index: 3;
@@ -390,16 +460,17 @@
       padding: 8px;
 
       color: #dce5d8;
-      background: rgba(5,7,5,.92);
-      border: 1px solid rgba(255,255,255,.13);
+
+      background: rgba(5, 7, 5, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 8px;
 
-      text-align: center;
       font-family: monospace;
       font-size: 12px;
+      text-align: center;
     }
 
-    .corredor {
+    .racer {
       position: absolute;
       left: 140px;
 
@@ -407,44 +478,54 @@
       height: 39px;
 
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
 
       color: #080c03;
-      background: linear-gradient(135deg, var(--amarillo), var(--verde));
-      border: 2px solid var(--verde);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--yellow),
+          var(--green)
+        );
+
+      border: 2px solid var(--green);
       border-radius: 9px;
+
+      box-shadow:
+        0 0 22px rgba(152, 255, 0, 0.30);
 
       font-size: 18px;
       font-weight: bold;
 
-      box-shadow: 0 0 22px rgba(152,255,0,.30);
-      transition: left .15s linear;
+      transition: left 0.15s linear;
     }
 
-    .corredor::before,
-    .corredor::after {
+    .racer::before,
+    .racer::after {
       content: "";
+
       position: absolute;
       bottom: -8px;
 
       width: 12px;
       height: 12px;
 
-      background: var(--verde);
+      background: var(--green);
       border: 3px solid #263021;
       border-radius: 50%;
     }
 
-    .corredor::before {
+    .racer::before {
       left: 4px;
     }
 
-    .corredor::after {
+    .racer::after {
       right: 4px;
     }
 
-    .meta {
+    .finish-line {
       position: absolute;
       top: 0;
       right: 20px;
@@ -461,7 +542,7 @@
         ) 0 0 / 18px 18px;
     }
 
-    .ganador {
+    .winner {
       min-height: 85px;
       padding: 18px 25px;
 
@@ -469,95 +550,105 @@
       align-items: center;
       gap: 15px;
 
-      border-top: 1px solid var(--borde);
-      background: linear-gradient(
-        90deg,
-        rgba(152,255,0,.09),
-        transparent
-      );
+      background:
+        linear-gradient(
+          90deg,
+          rgba(152, 255, 0, 0.09),
+          transparent
+        );
+
+      border-top: 1px solid var(--border);
     }
 
-    .ganador .trofeo {
+    .winner-trophy {
       font-size: 34px;
     }
 
-    .ganador div:last-child {
+    .winner div:last-child {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .ganador span {
-      color: var(--gris);
+    .winner span {
+      color: var(--gray);
+
       font-size: 10px;
       font-weight: bold;
       letter-spacing: 1px;
     }
 
-    .tarjetas {
+    .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
-    .tarjeta {
+    .card {
       min-height: 230px;
       padding: 28px;
 
-      border: 1px solid var(--borde);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 25, 14, 0.95),
+          rgba(7, 10, 6, 0.95)
+        );
+
+      border: 1px solid var(--border);
       border-radius: 18px;
-      background: linear-gradient(
-        145deg,
-        rgba(17,25,14,.95),
-        rgba(7,10,6,.95)
-      );
     }
 
-    .numero {
-      color: var(--verde);
+    .card-number {
+      color: var(--green);
+
       font-size: 13px;
       font-weight: bold;
     }
 
-    .tarjeta h3 {
+    .card h3 {
       margin-top: 35px;
       font-size: 21px;
     }
 
-    .tarjeta p {
+    .card p {
       margin-top: 13px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       line-height: 1.65;
     }
 
-    .seguridad {
+    .security {
       margin-top: 25px;
       padding: 35px;
-
-      border: 1px solid rgba(255,215,0,.25);
-      border-radius: 20px;
 
       background:
         radial-gradient(
           circle at right top,
-          rgba(152,255,0,.10),
+          rgba(152, 255, 0, 0.10),
           transparent 40%
         ),
-        rgba(13,19,11,.85);
+        rgba(13, 19, 11, 0.85);
+
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 20px;
     }
 
-    .seguridad h3 {
-      color: var(--amarillo);
+    .security h3 {
+      color: var(--yellow);
       font-size: 25px;
     }
 
-    .seguridad p {
+    .security p {
       margin-top: 15px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       line-height: 1.7;
     }
 
-    .comunidad {
+    .community {
       margin: 100px 0 40px;
       padding: 45px;
 
@@ -566,23 +657,25 @@
       align-items: center;
       gap: 45px;
 
-      border: 1px solid var(--borde);
+      background: rgba(13, 19, 11, 0.88);
+      border: 1px solid var(--border);
       border-radius: 25px;
-      background: rgba(13,19,11,.88);
     }
 
-    .comunidad img {
+    .community img {
       width: 100%;
       border-radius: 25px;
     }
 
-    .comunidad h2 {
+    .community h2 {
       font-size: clamp(35px, 5vw, 55px);
     }
 
-    .comunidad p {
+    .community p {
       margin-top: 15px;
-      color: var(--gris);
+
+      color: var(--gray);
+
       line-height: 1.7;
     }
 
@@ -591,14 +684,16 @@
       margin: auto;
       padding: 35px 0;
 
-      color: var(--gris);
-      border-top: 1px solid var(--borde);
-      text-align: center;
+      color: var(--gray);
+
+      border-top: 1px solid var(--border);
+
       font-size: 13px;
       line-height: 1.7;
+      text-align: center;
     }
 
-    .aviso {
+    .notification {
       position: fixed;
       right: 20px;
       bottom: 20px;
@@ -607,16 +702,19 @@
       padding: 13px 18px;
 
       color: #071000;
-      background: var(--verde);
+
+      background: var(--green);
       border-radius: 10px;
 
       font-weight: bold;
+
       opacity: 0;
       transform: translateY(15px);
-      transition: .2s;
+
+      transition: 0.2s;
     }
 
-    .aviso.visible {
+    .notification.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -626,18 +724,18 @@
         display: none;
       }
 
-      .estadisticas,
-      .tarjetas {
+      .statistics,
+      .cards {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .comunidad {
+      .community {
         grid-template-columns: 220px 1fr;
       }
     }
 
     @media (max-width: 650px) {
-      header .boton {
+      header > .button {
         display: none;
       }
 
@@ -646,7 +744,7 @@
         align-items: end;
       }
 
-      .hero-contenido {
+      .hero-content {
         padding: 30px 22px;
       }
 
@@ -654,49 +752,50 @@
         font-size: 45px;
       }
 
-      .acciones .boton {
+      .actions .button {
         width: 100%;
       }
 
-      .estadisticas,
-      .tarjetas {
+      .statistics,
+      .cards {
         grid-template-columns: 1fr;
       }
 
-      .estadisticas article {
+      .statistics article {
         border-right: none;
-        border-bottom: 1px solid var(--borde);
+        border-bottom: 1px solid var(--border);
       }
 
-      .carrera-cabecera {
+      .race-header {
         flex-wrap: wrap;
         gap: 18px;
       }
 
-      .temporizador {
+      .race-timer {
         margin-right: 0;
       }
 
-      .carrera-cabecera .boton {
+      .race-header .button {
         width: 100%;
       }
 
-      .wallet {
+      .wallet-address {
         width: 92px;
         font-size: 10px;
       }
 
-      .corredor {
+      .racer {
         left: 105px;
       }
 
-      .comunidad {
+      .community {
         grid-template-columns: 1fr;
         padding: 28px;
+
         text-align: center;
       }
 
-      .comunidad img {
+      .community img {
         max-width: 240px;
         margin: auto;
       }
@@ -707,9 +806,11 @@
 <body>
 
   <header>
-    <a class="marca" href="#inicio">
-      <!-- Guarda tu logo con el nombre logo.png -->
-      <img src="logo.png" alt="Logo Wallet Racers">
+    <a class="brand" href="#home">
+      <img
+        src="logo.png"
+        alt="Wallet Racers logo"
+      >
 
       <div>
         <strong>WALLET RACERS</strong>
@@ -718,23 +819,26 @@
     </a>
 
     <nav>
-      <a href="#carrera">Carrera</a>
-      <a href="#funciona">Funcionamiento</a>
-      <a href="#reglas">Reglas</a>
-      <a href="#comunidad">Comunidad</a>
+      <a href="#race">Race</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#rules">Rules</a>
+      <a href="#community">Community</a>
     </nav>
 
-    <a class="boton boton-verde" href="#comunidad">
-      Unirse
+    <a
+      class="button button-green"
+      href="#community"
+    >
+      Join Us
     </a>
   </header>
 
   <main>
 
-    <section class="hero" id="inicio">
-      <div class="hero-contenido">
+    <section class="hero" id="home">
+      <div class="hero-content">
 
-        <div class="etiqueta">
+        <div class="tag">
           ⚡ BUILT ON SOLANA
         </div>
 
@@ -744,98 +848,111 @@
         </h1>
 
         <p>
-          Wallet Racers es una memecoin comunitaria donde las wallets
-          elegibles podrán aparecer como corredores en carreras rápidas,
-          transparentes y verificables.
+          Wallet Racers is a community memecoin where eligible
+          wallets can appear as racers in fast, transparent and
+          verifiable races.
         </p>
 
-        <div class="acciones">
-          <a class="boton boton-verde" href="#carrera">
-            Probar carrera
+        <div class="actions">
+          <a
+            class="button button-green"
+            href="#race"
+          >
+            Try the Race
           </a>
 
-          <a class="boton boton-oscuro" href="#funciona">
-            Cómo funciona
+          <a
+            class="button button-dark"
+            href="#how-it-works"
+          >
+            How It Works
           </a>
         </div>
 
-        <div class="contrato">
-          <span>DIRECCIÓN DEL CONTRATO</span>
+        <div class="contract">
+          <span>CONTRACT ADDRESS</span>
 
-          <button id="copiarContrato">
-            <strong id="textoContrato">COMING SOON</strong>
-            <span>Copiar</span>
+          <button id="copyContract">
+            <strong id="contractText">
+              COMING SOON
+            </strong>
+
+            <span>Copy</span>
           </button>
         </div>
 
       </div>
     </section>
 
-    <div class="estadisticas">
+    <div class="statistics">
       <article>
         <strong>2 MIN</strong>
-        <span>Duración recomendada</span>
+        <span>Recommended race duration</span>
       </article>
 
       <article>
         <strong>1 WALLET</strong>
-        <span>Una entrada por ronda</span>
+        <span>One entry per round</span>
       </article>
 
       <article>
         <strong>ON-CHAIN</strong>
-        <span>Resultados verificables</span>
+        <span>Verifiable results</span>
       </article>
 
       <article>
         <strong>COMMUNITY</strong>
-        <span>Entretenimiento comunitario</span>
+        <span>Community entertainment</span>
       </article>
     </div>
 
-    <section id="carrera">
-      <div class="titulo-seccion">
-        <small>DEMOSTRACIÓN VISUAL</small>
+    <section id="race">
+      <div class="section-title">
+        <small>VISUAL DEMONSTRATION</small>
+
         <h2>Wallet Race</h2>
 
         <p>
-          Esta carrera utiliza wallets ficticias. Todavía no detecta compras
-          reales ni envía premios.
+          This demonstration uses fictional wallet addresses.
+          It does not detect real purchases or send real rewards.
         </p>
       </div>
 
-      <div class="carrera">
+      <div class="race">
 
-        <div class="carrera-cabecera">
-          <div class="dato">
-            <span>ESTADO</span>
-            <strong id="estadoCarrera">LISTO</strong>
+        <div class="race-header">
+          <div class="race-data">
+            <span>STATUS</span>
+            <strong id="raceStatus">READY</strong>
           </div>
 
-          <div class="dato temporizador">
-            <span>TIEMPO</span>
-            <strong id="temporizador">00:20</strong>
+          <div class="race-data race-timer">
+            <span>TIME</span>
+            <strong id="raceTimer">00:20</strong>
           </div>
 
           <button
-            class="boton boton-verde"
-            id="iniciarCarrera"
+            class="button button-green"
+            id="startRace"
           >
-            Iniciar carrera
+            Start Race
           </button>
         </div>
 
-        <div class="pista" id="pista">
-          <div class="meta"></div>
+        <div class="track" id="track">
+          <div class="finish-line"></div>
         </div>
 
-        <div class="ganador">
-          <div class="trofeo">🏆</div>
+        <div class="winner">
+          <div class="winner-trophy">
+            🏆
+          </div>
 
           <div>
-            <span>GANADOR DE DEMOSTRACIÓN</span>
-            <strong id="walletGanadora">
-              Esperando la carrera...
+            <span>DEMO WINNER</span>
+
+            <strong id="winningWallet">
+              Waiting for the race...
             </strong>
           </div>
         </div>
@@ -843,132 +960,181 @@
       </div>
     </section>
 
-    <section id="funciona">
-      <div class="titulo-seccion">
-        <small>EL CONCEPTO</small>
-        <h2>¿Cómo funcionará?</h2>
+    <section id="how-it-works">
+      <div class="section-title">
+        <small>THE CONCEPT</small>
+
+        <h2>How Will It Work?</h2>
 
         <p>
-          La integración real se construirá por etapas para proteger
-          las wallets y comprobar correctamente las transacciones.
+          The real integration will be built in stages to protect
+          wallets and correctly verify blockchain transactions.
         </p>
       </div>
 
-      <div class="tarjetas">
-        <article class="tarjeta">
-          <span class="numero">01</span>
-          <h3>Compra confirmada</h3>
+      <div class="cards">
+
+        <article class="card">
+          <span class="card-number">01</span>
+
+          <h3>Confirmed Purchase</h3>
+
           <p>
-            El servidor detectará una compra elegible y confirmada de $WRACE.
+            The server will detect an eligible and confirmed
+            purchase of $WRACE.
           </p>
         </article>
 
-        <article class="tarjeta">
-          <span class="numero">02</span>
-          <h3>Wallet participante</h3>
+        <article class="card">
+          <span class="card-number">02</span>
+
+          <h3>Wallet Entry</h3>
+
           <p>
-            La dirección pública aparecerá abreviada como corredor.
+            The public wallet address will appear in shortened
+            form as a racer.
           </p>
         </article>
 
-        <article class="tarjeta">
-          <span class="numero">03</span>
-          <h3>Carrera rápida</h3>
+        <article class="card">
+          <span class="card-number">03</span>
+
+          <h3>Fast Race</h3>
+
           <p>
-            Las wallets participarán en una ronda animada de aproximadamente
-            dos minutos.
+            Eligible wallets will participate in an animated
+            race lasting approximately two minutes.
           </p>
         </article>
 
-        <article class="tarjeta">
-          <span class="numero">04</span>
-          <h3>Resultado verificable</h3>
+        <article class="card">
+          <span class="card-number">04</span>
+
+          <h3>Verifiable Result</h3>
+
           <p>
-            El ganador y la transacción del premio aparecerán públicamente.
+            The winning wallet and reward transaction can be
+            displayed publicly and verified on-chain.
           </p>
         </article>
+
       </div>
     </section>
 
-    <section id="reglas">
-      <div class="titulo-seccion">
-        <small>JUEGO JUSTO</small>
-        <h2>Reglas propuestas</h2>
-      </div>
+    <section id="rules">
+      <div class="section-title">
+        <small>FAIR PLAY</small>
 
-      <div class="tarjetas">
-        <article class="tarjeta">
-          <h3>Una entrada</h3>
-          <p>
-            Una wallet tendrá una sola participación en cada ronda.
-          </p>
-        </article>
-
-        <article class="tarjeta">
-          <h3>Compra mínima</h3>
-          <p>
-            La cantidad mínima será configurada y publicada antes del inicio.
-          </p>
-        </article>
-
-        <article class="tarjeta">
-          <h3>Confirmación</h3>
-          <p>
-            Las compras deberán estar confirmadas en la blockchain.
-          </p>
-        </article>
-
-        <article class="tarjeta">
-          <h3>Prueba pública</h3>
-          <p>
-            La wallet ganadora y el pago podrán revisarse en Solana.
-          </p>
-        </article>
-      </div>
-
-      <div class="seguridad">
-        <h3>🔒 Seguridad de las wallets</h3>
+        <h2>Proposed Rules</h2>
 
         <p>
-          Wallet Racers nunca solicitará frases semilla, contraseñas ni claves
-          privadas. Los premios reales deberán salir de una wallet separada,
-          con saldo limitado. Nunca coloques una clave privada dentro de este
-          archivo ni en GitHub.
+          These rules are preliminary and must be finalized
+          before real rewards are activated.
+        </p>
+      </div>
+
+      <div class="cards">
+
+        <article class="card">
+          <span class="card-number">01</span>
+
+          <h3>One Entry</h3>
+
+          <p>
+            Each eligible wallet receives one entry in every
+            race round.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-number">02</span>
+
+          <h3>Minimum Purchase</h3>
+
+          <p>
+            The minimum eligible purchase amount will be
+            configured and publicly announced.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-number">03</span>
+
+          <h3>Blockchain Confirmation</h3>
+
+          <p>
+            Purchases must be successfully confirmed on the
+            Solana blockchain.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-number">04</span>
+
+          <h3>Public Proof</h3>
+
+          <p>
+            The winning wallet and reward payment can be
+            reviewed publicly on Solana.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="security">
+        <h3>🔒 Wallet Security</h3>
+
+        <p>
+          Wallet Racers will never request seed phrases,
+          passwords or private keys. Real rewards should be
+          sent from a separate prize wallet with a limited
+          balance. Never place a seed phrase or private key
+          inside this website or in a public GitHub repository.
         </p>
       </div>
     </section>
 
-    <section class="comunidad" id="comunidad">
-      <img src="logo.png" alt="Mascota Wallet Racers">
+    <section class="community" id="community">
+
+      <img
+        src="logo.png"
+        alt="Wallet Racers mascot"
+      >
 
       <div>
-        <small class="etiqueta">JOIN THE GRID</small>
+        <small class="tag">
+          JOIN THE GRID
+        </small>
 
-        <h2>Buy. Race. HODL. Win.</h2>
+        <h2>
+          Buy. Race. HODL. Win.
+        </h2>
 
         <p>
-          Los enlaces oficiales de X, Telegram y la dirección del contrato
-          se agregarán antes del lanzamiento público.
+          The official X account, Telegram community and token
+          contract address will be added before the public launch.
         </p>
 
-        <div class="acciones">
-          <!-- Cambia # por tu enlace de X -->
+        <div class="actions">
+
+          <!-- Replace # with your official X link. -->
           <a
-            class="boton boton-oscuro"
+            class="button button-dark"
             href="#"
             onclick="return false"
           >
-            X — Próximamente
+            X — Coming Soon
           </a>
 
-          <!-- Cambia # por tu enlace de Telegram -->
+          <!-- Replace # with your official Telegram link. -->
           <a
-            class="boton boton-oscuro"
+            class="button button-dark"
             href="#"
             onclick="return false"
           >
-            Telegram — Próximamente
+            Telegram — Coming Soon
           </a>
+
         </div>
       </div>
     </section>
@@ -976,34 +1142,42 @@
   </main>
 
   <footer>
-    <strong>Wallet Racers — $WRACE</strong>
+    <strong>
+      Wallet Racers — $WRACE
+    </strong>
 
     <p>
-      Proyecto independiente de entretenimiento. No garantiza ganancias.
-      No está afiliado oficialmente con Solana ni Pump.fun.
+      Independent entertainment project. No guaranteed returns.
+      Wallet Racers is not officially affiliated with Solana
+      or Pump.fun.
     </p>
 
-    <p>© 2026 Wallet Racers</p>
+    <p>
+      © 2026 Wallet Racers
+    </p>
   </footer>
 
-  <div class="aviso" id="aviso">
-    Copiado
+  <div
+    class="notification"
+    id="notification"
+  >
+    Copied
   </div>
 
   <script>
     /*
-      DURACIÓN DE LA CARRERA:
+      RACE DURATION
 
-      Para probar:
-      const DURACION = 20;
+      Use 20 seconds for testing:
+      const RACE_DURATION = 20;
 
-      Para dos minutos:
-      const DURACION = 120;
+      Use 120 seconds for a two-minute race:
+      const RACE_DURATION = 120;
     */
 
-    const DURACION = 20;
+    const RACE_DURATION = 20;
 
-    const wallets = [
+    const demoWallets = [
       "7x4B...9LmP",
       "F2k9...Qp81",
       "A8m3...Tz72",
@@ -1012,205 +1186,282 @@
       "B7p1...Vn03"
     ];
 
-    const pista = document.getElementById("pista");
-    const botonCarrera = document.getElementById("iniciarCarrera");
-    const estadoCarrera = document.getElementById("estadoCarrera");
-    const temporizador = document.getElementById("temporizador");
-    const walletGanadora = document.getElementById("walletGanadora");
-    const copiarContrato = document.getElementById("copiarContrato");
-    const textoContrato = document.getElementById("textoContrato");
-    const aviso = document.getElementById("aviso");
+    const track =
+      document.getElementById("track");
 
-    let corredores = [];
-    let intervaloMovimiento;
-    let intervaloTiempo;
-    let carreraActiva = false;
+    const startRaceButton =
+      document.getElementById("startRace");
 
-    function crearCarriles() {
+    const raceStatus =
+      document.getElementById("raceStatus");
+
+    const raceTimer =
+      document.getElementById("raceTimer");
+
+    const winningWallet =
+      document.getElementById("winningWallet");
+
+    const copyContractButton =
+      document.getElementById("copyContract");
+
+    const contractText =
+      document.getElementById("contractText");
+
+    const notification =
+      document.getElementById("notification");
+
+    let racers = [];
+    let movementInterval;
+    let timerInterval;
+    let raceActive = false;
+
+    function createRaceLanes() {
       document
-        .querySelectorAll(".carril")
-        .forEach(carril => carril.remove());
+        .querySelectorAll(".lane")
+        .forEach((lane) => lane.remove());
 
-      corredores = [];
+      racers = [];
 
-      wallets.forEach(wallet => {
-        const carril = document.createElement("div");
-        carril.className = "carril";
+      demoWallets.forEach((wallet) => {
+        const lane =
+          document.createElement("div");
 
-        const etiquetaWallet = document.createElement("div");
-        etiquetaWallet.className = "wallet";
-        etiquetaWallet.textContent = wallet;
+        lane.className = "lane";
 
-        const corredor = document.createElement("div");
-        corredor.className = "corredor";
-        corredor.textContent = "W";
+        const walletLabel =
+          document.createElement("div");
 
-        corredor.dataset.wallet = wallet;
-        corredor.dataset.progreso = "0";
-        corredor.dataset.velocidad =
-          (0.65 + Math.random() * 0.7).toFixed(3);
+        walletLabel.className =
+          "wallet-address";
 
-        carril.appendChild(etiquetaWallet);
-        carril.appendChild(corredor);
+        walletLabel.textContent = wallet;
 
-        pista.appendChild(carril);
-        corredores.push(corredor);
+        const racer =
+          document.createElement("div");
+
+        racer.className = "racer";
+        racer.textContent = "W";
+
+        racer.dataset.wallet = wallet;
+        racer.dataset.progress = "0";
+
+        racer.dataset.speed =
+          (
+            0.65 +
+            Math.random() *
+            0.7
+          ).toFixed(3);
+
+        lane.appendChild(walletLabel);
+        lane.appendChild(racer);
+
+        track.appendChild(lane);
+        racers.push(racer);
       });
     }
 
-    function formatearTiempo(segundos) {
-      const minutos = Math.floor(segundos / 60);
-      const segundosRestantes = segundos % 60;
+    function formatTime(seconds) {
+      const minutes =
+        Math.floor(seconds / 60);
+
+      const remainingSeconds =
+        seconds % 60;
 
       return (
-        String(minutos).padStart(2, "0") +
+        String(minutes).padStart(2, "0") +
         ":" +
-        String(segundosRestantes).padStart(2, "0")
+        String(remainingSeconds).padStart(2, "0")
       );
     }
 
-    function obtenerRecorridoMaximo() {
-      const inicio = window.innerWidth <= 650 ? 105 : 140;
+    function getMaximumDistance() {
+      const startingPosition =
+        window.innerWidth <= 650
+          ? 105
+          : 140;
 
       return Math.max(
         80,
-        pista.clientWidth - inicio - 105
+        track.clientWidth -
+        startingPosition -
+        105
       );
     }
 
-    function iniciarCarrera() {
-      if (carreraActiva) {
+    function startRace() {
+      if (raceActive) {
         return;
       }
 
-      crearCarriles();
+      createRaceLanes();
 
-      carreraActiva = true;
-      botonCarrera.disabled = true;
-      botonCarrera.textContent = "Carrera en curso";
+      raceActive = true;
 
-      estadoCarrera.textContent = "CORRIENDO";
-      walletGanadora.textContent = "Carrera en curso...";
+      startRaceButton.disabled = true;
 
-      let tiempoRestante = DURACION;
+      startRaceButton.textContent =
+        "Race in Progress";
 
-      temporizador.textContent =
-        formatearTiempo(tiempoRestante);
+      raceStatus.textContent =
+        "RACING";
 
-      const recorridoMaximo = obtenerRecorridoMaximo();
+      winningWallet.textContent =
+        "Race in progress...";
 
-      intervaloTiempo = setInterval(() => {
-        tiempoRestante--;
+      let remainingTime =
+        RACE_DURATION;
 
-        temporizador.textContent =
-          formatearTiempo(Math.max(tiempoRestante, 0));
+      raceTimer.textContent =
+        formatTime(remainingTime);
 
-        if (tiempoRestante <= 0) {
-          clearInterval(intervaloTiempo);
-          finalizarCarrera();
+      const maximumDistance =
+        getMaximumDistance();
+
+      timerInterval = setInterval(() => {
+        remainingTime--;
+
+        raceTimer.textContent =
+          formatTime(
+            Math.max(remainingTime, 0)
+          );
+
+        if (remainingTime <= 0) {
+          clearInterval(timerInterval);
+          finishRace();
         }
       }, 1000);
 
-      intervaloMovimiento = setInterval(() => {
-        corredores.forEach(corredor => {
-          const progresoActual =
-            Number(corredor.dataset.progreso);
+      movementInterval = setInterval(() => {
+        racers.forEach((racer) => {
+          const currentProgress =
+            Number(
+              racer.dataset.progress
+            );
 
-          const velocidad =
-            Number(corredor.dataset.velocidad);
+          const speed =
+            Number(
+              racer.dataset.speed
+            );
 
-          const variacion =
-            0.3 + Math.random() * 1.5;
+          const variation =
+            0.3 +
+            Math.random() *
+            1.5;
 
-          const turbo =
-            Math.random() > 0.94 ? 2.2 : 1;
+          const boost =
+            Math.random() > 0.94
+              ? 2.2
+              : 1;
 
-          const nuevoProgreso = Math.min(
-            99,
-            progresoActual +
-            velocidad *
-            variacion *
-            turbo
-          );
+          const newProgress =
+            Math.min(
+              99,
+              currentProgress +
+              speed *
+              variation *
+              boost
+            );
 
-          corredor.dataset.progreso =
-            String(nuevoProgreso);
+          racer.dataset.progress =
+            String(newProgress);
 
-          const inicio =
-            window.innerWidth <= 650 ? 105 : 140;
+          const startingPosition =
+            window.innerWidth <= 650
+              ? 105
+              : 140;
 
-          corredor.style.left =
-            inicio +
-            (nuevoProgreso / 100) *
-            recorridoMaximo +
+          racer.style.left =
+            startingPosition +
+            (
+              newProgress /
+              100
+            ) *
+            maximumDistance +
             "px";
         });
       }, 150);
     }
 
-    function finalizarCarrera() {
-      clearInterval(intervaloMovimiento);
+    function finishRace() {
+      clearInterval(movementInterval);
 
-      const clasificacion = [...corredores].sort(
-        (a, b) =>
-          Number(b.dataset.progreso) -
-          Number(a.dataset.progreso)
-      );
+      const ranking =
+        [...racers].sort(
+          (firstRacer, secondRacer) =>
+            Number(
+              secondRacer.dataset.progress
+            ) -
+            Number(
+              firstRacer.dataset.progress
+            )
+        );
 
-      const ganador = clasificacion[0];
+      const winner =
+        ranking[0];
 
-      const recorridoMaximo =
-        obtenerRecorridoMaximo();
+      const maximumDistance =
+        getMaximumDistance();
 
-      const inicio =
-        window.innerWidth <= 650 ? 105 : 140;
+      const startingPosition =
+        window.innerWidth <= 650
+          ? 105
+          : 140;
 
-      ganador.style.left =
-        inicio + recorridoMaximo + "px";
+      winner.style.left =
+        startingPosition +
+        maximumDistance +
+        "px";
 
-      estadoCarrera.textContent = "FINALIZADA";
+      raceStatus.textContent =
+        "FINISHED";
 
-      walletGanadora.textContent =
-        ganador.dataset.wallet;
+      winningWallet.textContent =
+        winner.dataset.wallet;
 
-      botonCarrera.disabled = false;
-      botonCarrera.textContent =
-        "Realizar otra carrera";
+      startRaceButton.disabled = false;
 
-      carreraActiva = false;
+      startRaceButton.textContent =
+        "Start Another Race";
+
+      raceActive = false;
     }
 
-    botonCarrera.addEventListener(
+    startRaceButton.addEventListener(
       "click",
-      iniciarCarrera
+      startRace
     );
 
-    copiarContrato.addEventListener(
+    copyContractButton.addEventListener(
       "click",
       async () => {
-        const contrato =
-          textoContrato.textContent.trim();
+        const contractAddress =
+          contractText.textContent.trim();
 
         try {
           await navigator.clipboard.writeText(
-            contrato
+            contractAddress
           );
 
-          aviso.textContent =
-            "Contrato copiado";
+          notification.textContent =
+            "Contract Copied";
         } catch {
-          aviso.textContent = contrato;
+          notification.textContent =
+            contractAddress;
         }
 
-        aviso.classList.add("visible");
+        notification.classList.add(
+          "visible"
+        );
 
         setTimeout(() => {
-          aviso.classList.remove("visible");
+          notification.classList.remove(
+            "visible"
+          );
         }, 1800);
       }
     );
 
-    crearCarriles();
+    createRaceLanes();
   </script>
 
 </body>
