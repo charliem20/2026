@@ -549,57 +549,25 @@
       opacity: 0.35;
     }
 
-    .idle-image,
-    .speaking-video {
-      position: absolute;
-      inset: 0;
+   .avatar-video {
+  position: absolute;
+  inset: 0;
 
-      width: 100%;
-      height: 100%;
+  width: 100%;
+  height: 100%;
 
-      display: block;
+  display: block;
 
-      object-fit: cover;
-      object-position: center top;
+  object-fit: cover;
+  object-position: center top;
 
-      transition:
-        opacity 0.18s ease,
-        visibility 0.18s ease;
-    }
+  background: #000;
 
-    .idle-image {
-      z-index: 2;
+  opacity: 1;
+  visibility: visible;
+}
 
-      opacity: 1;
-      visibility: visible;
-
-      filter:
-        saturate(1.08)
-        contrast(1.03);
-    }
-
-    .speaking-video {
-      z-index: 3;
-
-      opacity: 0;
-      visibility: hidden;
-
-      background: #000;
-
-      pointer-events: none;
-    }
-
-    .avatar-frame.video-speaking
-    .idle-image {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .avatar-frame.video-speaking
-    .speaking-video {
-      opacity: 1;
-      visibility: visible;
-    }
+     
 
     .avatar-frame.listening {
       border-color: var(--cyan);
@@ -1369,28 +1337,21 @@
         <div class="avatar-glow"></div>
         <div class="orbit"></div>
 
-        <div
-          class="avatar-frame"
-          id="avatarFrame"
-        >
-          <img
-            class="idle-image"
-            src="holo.png"
-            alt="HOLO virtual assistant"
-          >
-
-          <video
-            class="speaking-video"
-            id="speakingVideo"
-            src="holo-speaking.mp4"
-            poster="holo.png"
-            muted
-            loop
-            playsinline
-            preload="auto"
-          ></video>
-        </div>
-
+      <div
+  class="avatar-frame"
+  id="avatarFrame"
+>
+  <video
+    class="avatar-video"
+    id="speakingVideo"
+    src="./holo-speaking.mp4"
+    poster="./holo.png"
+    muted
+    loop
+    playsinline
+    preload="auto"
+  ></video>
+</div>
         <div
           class="voice-waves inactive"
           id="voiceWaves"
@@ -1922,198 +1883,157 @@
       );
     }
 
-    function primeSpeakingVideo() {
-      if (
-        videoPrimed ||
-        videoPrimeRunning
-      ) {
-        return;
-      }
+function primeSpeakingVideo() {
+  speakingVideo.muted = true;
+  speakingVideo.loop = true;
+  speakingVideo.playsInline = true;
+  speakingVideo.preload = "auto";
 
-      videoPrimeRunning = true;
+  if (speakingVideo.readyState === 0) {
+    speakingVideo.load();
+  }
+}
 
-      speakingVideo.muted = true;
-      speakingVideo.loop = true;
-      speakingVideo.playsInline = true;
+function startSpeakingVideo() {
+  primeSpeakingVideo();
 
-      const playPromise =
-        speakingVideo.play();
+  speakingVideo.playbackRate = 1;
 
-      if (!playPromise) {
-        videoPrimeRunning = false;
-        return;
-      }
+  try {
+    speakingVideo.currentTime = 0;
+  } catch (error) {
+    console.log("The video is still loading.");
+  }
 
-      playPromise
-        .then(() => {
-          speakingVideo.pause();
-          speakingVideo.currentTime = 0;
-          videoPrimed = true;
-        })
-        .catch(() => {
-          videoPrimed = false;
-        })
-        .finally(() => {
-          videoPrimeRunning = false;
-        });
-    }
+  const playPromise =
+    speakingVideo.play();
 
-    async function startSpeakingVideo(
-      speechId
+  if (playPromise) {
+    playPromise.catch((error) => {
+      console.log(
+        "Speaking video could not start:",
+        error
+      );
+
+      systemStatus.textContent =
+        "VIDEO BLOCKED";
+    });
+  }
+}
+
+function stopSpeakingVideo() {
+  speakingVideo.pause();
+
+  try {
+    speakingVideo.currentTime = 0;
+  } catch (error) {
+    console.log(
+      "The video could not reset."
+    );
+  }
+}
+
+function cancelCurrentSpeech() {
+  activeSpeechId += 1;
+
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+
+  stopSpeakingVideo();
+}
+
+function speakText(text) {
+  if (
+    !voiceEnabled ||
+    !("speechSynthesis" in window)
+  ) {
+    stopSpeakingVideo();
+
+    setHoloState(
+      "idle",
+      "Ready to talk"
+    );
+
+    return;
+  }
+
+  cancelCurrentSpeech();
+
+  const speechId =
+    activeSpeechId;
+
+  const speech =
+    new SpeechSynthesisUtterance(text);
+
+  const preferredVoice =
+    getPreferredVoice();
+
+  speech.lang = "en-US";
+  speech.rate = 1;
+  speech.pitch = 1.08;
+  speech.volume = 1;
+
+  if (preferredVoice) {
+    speech.voice = preferredVoice;
+  }
+
+  let speechFinished = false;
+
+  function finishSpeaking() {
+    if (
+      speechFinished ||
+      speechId !== activeSpeechId
     ) {
-      speakingVideo.muted = true;
-      speakingVideo.loop = true;
-      speakingVideo.playsInline = true;
-      speakingVideo.playbackRate = 1;
-
-      const revealVideo = () => {
-        if (
-          speechId === activeSpeechId
-        ) {
-          avatarFrame.classList.add(
-            "video-speaking"
-          );
-        }
-      };
-
-      speakingVideo.addEventListener(
-        "playing",
-        revealVideo,
-        {
-          once: true
-        }
-      );
-
-      try {
-        speakingVideo.currentTime = 0;
-
-        await speakingVideo.play();
-
-        revealVideo();
-      } catch (error) {
-        avatarFrame.classList.remove(
-          "video-speaking"
-        );
-
-        console.log(
-          "Speaking video could not start:",
-          error
-        );
-      }
+      return;
     }
 
-    function stopSpeakingVideo() {
-      avatarFrame.classList.remove(
-        "video-speaking"
-      );
+    speechFinished = true;
+    activeSpeechId += 1;
 
-      speakingVideo.pause();
+    stopSpeakingVideo();
 
-      try {
-        speakingVideo.currentTime = 0;
-      } catch (error) {
-        console.log(
-          "Video reset was delayed:",
-          error
-        );
-      }
+    setHoloState(
+      "idle",
+      "Ready to talk"
+    );
+  }
+
+  setHoloState(
+    "speaking",
+    "HOLO is speaking"
+  );
+
+  startSpeakingVideo();
+
+  speech.onstart = () => {
+    if (
+      speechId !== activeSpeechId
+    ) {
+      return;
     }
 
-    function cancelCurrentSpeech() {
-      activeSpeechId += 1;
+    setHoloState(
+      "speaking",
+      "HOLO is speaking"
+    );
 
-      if (
-        "speechSynthesis" in window
-      ) {
-        window.speechSynthesis.cancel();
-      }
-
-      stopSpeakingVideo();
+    if (speakingVideo.paused) {
+      startSpeakingVideo();
     }
+  };
 
-    function speakText(text) {
-      if (
-        !voiceEnabled ||
-        !("speechSynthesis" in window)
-      ) {
-        stopSpeakingVideo();
+  speech.onend =
+    finishSpeaking;
 
-        setHoloState(
-          "idle",
-          "Ready to talk"
-        );
+  speech.onerror =
+    finishSpeaking;
 
-        return;
-      }
-
-      cancelCurrentSpeech();
-
-      const speechId =
-        activeSpeechId;
-
-      const speech =
-        new SpeechSynthesisUtterance(
-          text
-        );
-
-      const preferredVoice =
-        getPreferredVoice();
-
-      speech.lang = "en-US";
-      speech.rate = 1;
-      speech.pitch = 1.08;
-      speech.volume = 1;
-
-      if (preferredVoice) {
-        speech.voice =
-          preferredVoice;
-      }
-
-      const finishSpeaking = () => {
-        if (
-          speechId !== activeSpeechId
-        ) {
-          return;
-        }
-
-        activeSpeechId += 1;
-
-        stopSpeakingVideo();
-
-        setHoloState(
-          "idle",
-          "Ready to talk"
-        );
-      };
-
-      speech.onstart = () => {
-        if (
-          speechId !== activeSpeechId
-        ) {
-          return;
-        }
-
-        setHoloState(
-          "speaking",
-          "HOLO is speaking"
-        );
-
-        startSpeakingVideo(
-          speechId
-        );
-      };
-
-      speech.onend =
-        finishSpeaking;
-
-      speech.onerror =
-        finishSpeaking;
-
-      window.speechSynthesis.speak(
-        speech
-      );
-    }
-
+  window.speechSynthesis.speak(
+    speech
+  );
+}
+  
     function processMessage(
       userMessage
     ) {
