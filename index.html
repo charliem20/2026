@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 
@@ -10,10 +10,10 @@
 
   <meta
     name="description"
-    content="HOLO, tu asistente virtual con voz."
+    content="HOLO, your intelligent virtual voice companion."
   >
 
-  <title>HOLO | Asistente Virtual</title>
+  <title>HOLO | Voice Intelligence</title>
 
   <link
     rel="icon"
@@ -23,7 +23,7 @@
   <style>
     :root {
       --background: #03040b;
-      --panel: rgba(8, 12, 28, 0.88);
+      --panel: rgba(8, 12, 28, 0.9);
       --panel-light: rgba(15, 22, 47, 0.82);
       --cyan: #36f2ff;
       --blue: #3478ff;
@@ -126,8 +126,7 @@
     }
 
     button,
-    input,
-    select {
+    input {
       font: inherit;
     }
 
@@ -263,8 +262,7 @@
       animation: pulseDot 1.5s ease-in-out infinite;
     }
 
-    .control-button,
-    .language-selector {
+    .control-button {
       min-height: 42px;
       padding: 0 14px;
 
@@ -275,7 +273,6 @@
       border-radius: 12px;
 
       cursor: pointer;
-      outline: none;
 
       transition:
         transform 0.2s,
@@ -287,11 +284,6 @@
       color: var(--cyan);
       border-color: rgba(54, 242, 255, 0.45);
       transform: translateY(-2px);
-    }
-
-    .language-selector option {
-      color: white;
-      background: #081025;
     }
 
     main {
@@ -353,7 +345,9 @@
         );
 
       transform: translateX(-110%);
-      animation: scanLight 8s ease-in-out infinite;
+
+      animation:
+        scanLight 8s ease-in-out infinite;
     }
 
     .holo-heading {
@@ -361,6 +355,7 @@
       z-index: 5;
 
       width: 100%;
+
       text-align: center;
     }
 
@@ -388,6 +383,7 @@
 
       background-clip: text;
       -webkit-background-clip: text;
+
       color: transparent;
 
       filter:
@@ -408,8 +404,8 @@
       z-index: 3;
 
       width: min(460px, 100%);
-      flex: 1;
       min-height: 430px;
+      flex: 1;
 
       display: flex;
       align-items: center;
@@ -433,7 +429,9 @@
       border-radius: 50%;
 
       filter: blur(10px);
-      animation: breathe 3s ease-in-out infinite;
+
+      animation:
+        breathe 3s ease-in-out infinite;
     }
 
     .orbit {
@@ -446,7 +444,8 @@
         1px dashed rgba(54, 242, 255, 0.35);
       border-radius: 50%;
 
-      animation: rotate 16s linear infinite;
+      animation:
+        rotate 16s linear infinite;
     }
 
     .orbit::before,
@@ -461,7 +460,8 @@
       background: var(--cyan);
       border-radius: 50%;
 
-      box-shadow: 0 0 18px var(--cyan);
+      box-shadow:
+        0 0 18px var(--cyan);
     }
 
     .orbit::before {
@@ -474,7 +474,9 @@
       bottom: 19%;
 
       background: var(--purple);
-      box-shadow: 0 0 18px var(--purple);
+
+      box-shadow:
+        0 0 18px var(--purple);
     }
 
     .holo-image-wrapper {
@@ -501,7 +503,8 @@
         0 0 100px rgba(52, 120, 255, 0.14),
         inset 0 0 25px rgba(54, 242, 255, 0.09);
 
-      animation: avatarFloat 4s ease-in-out infinite;
+      animation:
+        avatarFloat 4s ease-in-out infinite;
     }
 
     .holo-image-wrapper::after {
@@ -528,6 +531,7 @@
       height: 100%;
 
       display: block;
+
       object-fit: cover;
       object-position: center top;
 
@@ -600,7 +604,8 @@
       box-shadow:
         0 0 10px rgba(54, 242, 255, 0.45);
 
-      animation: wave 1.1s ease-in-out infinite;
+      animation:
+        wave 1.1s ease-in-out infinite;
     }
 
     .voice-waves span:nth-child(2) {
@@ -628,9 +633,11 @@
     }
 
     .voice-waves.inactive span {
-      animation-play-state: paused;
       height: 5px;
+
       opacity: 0.45;
+
+      animation-play-state: paused;
     }
 
     .holo-state {
@@ -694,6 +701,7 @@
         0 0 25px rgba(54, 242, 255, 0.25);
 
       cursor: pointer;
+
       transition: 0.2s;
     }
 
@@ -711,7 +719,8 @@
           var(--pink)
         );
 
-      animation: microphonePulse 1s ease-in-out infinite;
+      animation:
+        microphonePulse 1s ease-in-out infinite;
     }
 
     .chat-panel {
@@ -767,7 +776,9 @@
 
     .chat-icon-button:hover {
       color: var(--cyan);
-      border-color: rgba(54, 242, 255, 0.38);
+
+      border-color:
+        rgba(54, 242, 255, 0.38);
     }
 
     .messages {
@@ -790,7 +801,9 @@
     }
 
     .messages::-webkit-scrollbar-thumb {
-      background: rgba(54, 242, 255, 0.22);
+      background:
+        rgba(54, 242, 255, 0.22);
+
       border-radius: 10px;
     }
 
@@ -801,7 +814,8 @@
       flex-direction: column;
       gap: 6px;
 
-      animation: messageEntrance 0.25s ease forwards;
+      animation:
+        messageEntrance 0.25s ease forwards;
     }
 
     .message.holo {
@@ -873,8 +887,12 @@
       display: flex;
       gap: 5px;
 
-      background: rgba(54, 242, 255, 0.08);
-      border: 1px solid rgba(54, 242, 255, 0.2);
+      background:
+        rgba(54, 242, 255, 0.08);
+
+      border:
+        1px solid rgba(54, 242, 255, 0.2);
+
       border-radius: 16px;
     }
 
@@ -885,7 +903,8 @@
       background: var(--cyan);
       border-radius: 50%;
 
-      animation: typingDot 1s ease-in-out infinite;
+      animation:
+        typingDot 1s ease-in-out infinite;
     }
 
     .typing span:nth-child(2) {
@@ -903,7 +922,8 @@
       gap: 9px;
       overflow-x: auto;
 
-      border-top: 1px solid rgba(54, 242, 255, 0.09);
+      border-top:
+        1px solid rgba(54, 242, 255, 0.09);
     }
 
     .quick-actions::-webkit-scrollbar {
@@ -917,8 +937,12 @@
 
       color: var(--cyan);
 
-      background: rgba(54, 242, 255, 0.05);
-      border: 1px solid rgba(54, 242, 255, 0.18);
+      background:
+        rgba(54, 242, 255, 0.05);
+
+      border:
+        1px solid rgba(54, 242, 255, 0.18);
+
       border-radius: 30px;
 
       font-size: 12px;
@@ -927,7 +951,8 @@
     }
 
     .quick-action:hover {
-      background: rgba(54, 242, 255, 0.11);
+      background:
+        rgba(54, 242, 255, 0.11);
     }
 
     .input-area {
@@ -949,8 +974,12 @@
 
       color: var(--white);
 
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid rgba(255, 255, 255, 0.11);
+      background:
+        rgba(255, 255, 255, 0.045);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.11);
+
       border-radius: 13px;
 
       font-size: 19px;
@@ -960,7 +989,9 @@
 
     .input-button:hover {
       color: var(--cyan);
-      border-color: rgba(54, 242, 255, 0.38);
+
+      border-color:
+        rgba(54, 242, 255, 0.38);
     }
 
     .input-button.send {
@@ -986,7 +1017,8 @@
           var(--pink)
         );
 
-      animation: microphonePulse 1s ease-in-out infinite;
+      animation:
+        microphonePulse 1s ease-in-out infinite;
     }
 
     .message-input {
@@ -997,15 +1029,20 @@
 
       color: var(--white);
 
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid rgba(255, 255, 255, 0.11);
+      background:
+        rgba(255, 255, 255, 0.045);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.11);
+
       border-radius: 13px;
 
       outline: none;
     }
 
     .message-input:focus {
-      border-color: rgba(54, 242, 255, 0.42);
+      border-color:
+        rgba(54, 242, 255, 0.42);
 
       box-shadow:
         0 0 0 3px rgba(54, 242, 255, 0.06);
@@ -1083,11 +1120,15 @@
     @keyframes listeningPulse {
       0%,
       100% {
-        transform: translateY(0) scale(1);
+        transform:
+          translateY(0)
+          scale(1);
       }
 
       50% {
-        transform: translateY(-9px) scale(1.015);
+        transform:
+          translateY(-9px)
+          scale(1.015);
       }
     }
 
@@ -1192,11 +1233,6 @@
         padding: 0 10px;
       }
 
-      .language-selector {
-        width: 74px;
-        padding: 0 7px;
-      }
-
       main {
         width: min(100% - 14px, 1350px);
         padding-top: 10px;
@@ -1235,7 +1271,9 @@
 
       .input-area {
         padding: 12px;
-        grid-template-columns: 45px 1fr 45px;
+
+        grid-template-columns:
+          45px 1fr 45px;
       }
 
       .input-button {
@@ -1265,25 +1303,19 @@
     <div class="header-controls">
       <div class="status-chip">
         <span class="status-dot"></span>
-        <span id="systemStatus">SYSTEM ONLINE</span>
-      </div>
 
-      <select
-        class="language-selector"
-        id="languageSelector"
-        aria-label="Idioma"
-      >
-        <option value="es-PE">ES</option>
-        <option value="en-US">EN</option>
-      </select>
+        <span id="systemStatus">
+          SYSTEM ONLINE
+        </span>
+      </div>
 
       <button
         class="control-button"
         id="voiceToggle"
         type="button"
-        title="Activar o silenciar la voz"
+        title="Enable or mute HOLO's voice"
       >
-        🔊 Voz
+        🔊 Voice On
       </button>
     </div>
   </header>
@@ -1293,13 +1325,16 @@
     <section class="holo-panel">
 
       <div class="holo-heading">
-        <small>ARTIFICIAL INTELLIGENCE</small>
+        <small>
+          ARTIFICIAL INTELLIGENCE
+        </small>
 
         <h1>HOLO</h1>
 
         <p>
-          Tu compañera virtual. Escribe o presiona el micrófono
-          para comenzar una conversación.
+          Your intelligent virtual companion.
+          Type a message or use your microphone
+          to start a conversation.
         </p>
       </div>
 
@@ -1313,7 +1348,7 @@
         >
           <img
             src="holo.png"
-            alt="HOLO, asistente virtual"
+            alt="HOLO virtual assistant"
           >
         </div>
 
@@ -1335,8 +1370,9 @@
       <div class="holo-state">
         <div>
           <small>HOLO STATUS</small>
+
           <strong id="holoStatus">
-            Lista para conversar
+            Ready to talk
           </strong>
         </div>
 
@@ -1344,7 +1380,7 @@
           class="main-microphone"
           id="mainMicrophone"
           type="button"
-          aria-label="Hablar con HOLO"
+          aria-label="Talk to HOLO"
         >
           🎙️
         </button>
@@ -1356,10 +1392,12 @@
 
       <div class="chat-header">
         <div>
-          <h2>Conversación con HOLO</h2>
+          <h2>
+            Conversation with HOLO
+          </h2>
 
           <p>
-            Respuestas locales de demostración
+            Local demonstration responses
           </p>
         </div>
 
@@ -1368,7 +1406,7 @@
             class="chat-icon-button"
             id="repeatButton"
             type="button"
-            title="Repetir última respuesta"
+            title="Repeat the last response"
           >
             🔁
           </button>
@@ -1377,7 +1415,7 @@
             class="chat-icon-button"
             id="clearButton"
             type="button"
-            title="Borrar conversación"
+            title="Clear conversation"
           >
             🗑️
           </button>
@@ -1394,41 +1432,41 @@
         <button
           class="quick-action"
           type="button"
-          data-message="Hola HOLO"
+          data-message="Hello HOLO"
         >
-          Saludar
+          Say Hello
         </button>
 
         <button
           class="quick-action"
           type="button"
-          data-message="¿Quién eres?"
+          data-message="Who are you?"
         >
-          ¿Quién eres?
+          Who Are You?
         </button>
 
         <button
           class="quick-action"
           type="button"
-          data-message="Cuéntame un dato curioso"
+          data-message="Tell me an interesting fact"
         >
-          Dato curioso
+          Interesting Fact
         </button>
 
         <button
           class="quick-action"
           type="button"
-          data-message="Dame una frase motivadora"
+          data-message="Give me a motivational quote"
         >
-          Motivación
+          Motivation
         </button>
 
         <button
           class="quick-action"
           type="button"
-          data-message="¿Qué puedes hacer?"
+          data-message="What can you do?"
         >
-          Capacidades
+          Capabilities
         </button>
       </div>
 
@@ -1440,7 +1478,7 @@
           class="input-button"
           id="inputMicrophone"
           type="button"
-          aria-label="Usar micrófono"
+          aria-label="Use microphone"
         >
           🎙️
         </button>
@@ -1450,22 +1488,22 @@
           id="messageInput"
           type="text"
           autocomplete="off"
-          placeholder="Escribe un mensaje para HOLO..."
+          placeholder="Write a message to HOLO..."
           maxlength="500"
         >
 
         <button
           class="input-button send"
           type="submit"
-          aria-label="Enviar mensaje"
+          aria-label="Send message"
         >
           ➤
         </button>
       </form>
 
       <p class="disclaimer">
-        HOLO funciona actualmente en modo demostración local.
-        No compartas contraseñas, claves privadas ni información sensible.
+        HOLO currently runs in local demonstration mode.
+        Never share passwords, private keys or sensitive information.
       </p>
 
     </section>
@@ -1490,9 +1528,6 @@
 
     const voiceToggle =
       document.getElementById("voiceToggle");
-
-    const languageSelector =
-      document.getElementById("languageSelector");
 
     const clearButton =
       document.getElementById("clearButton");
@@ -1523,7 +1558,6 @@
     let listening = false;
     let voiceEnabled = true;
     let lastHoloResponse = "";
-    let selectedLanguage = "es-PE";
 
     function setHoloState(
       state,
@@ -1587,7 +1621,7 @@
       label.textContent =
         sender === "holo"
           ? "HOLO"
-          : "TÚ";
+          : "YOU";
 
       const bubble =
         document.createElement("div");
@@ -1647,11 +1681,6 @@
     function normalizeText(text) {
       return text
         .toLowerCase()
-        .normalize("NFD")
-        .replace(
-          /[\u0300-\u036f]/g,
-          ""
-        )
         .trim();
     }
 
@@ -1662,43 +1691,48 @@
         normalizeText(userMessage);
 
       if (
-        text.includes("hola") ||
-        text.includes("buenas") ||
+        text.includes("hello") ||
+        text.includes("hi") ||
         text.includes("hey")
       ) {
-        return selectedLanguage === "en-US"
-          ? "Hello. I am HOLO. It is a pleasure to meet you. How can I help you?"
-          : "Hola. Soy HOLO. Es un gusto conocerte. ¿En qué puedo ayudarte?";
+        return (
+          "Hello. I am HOLO. It is a pleasure " +
+          "to meet you. How can I help you?"
+        );
       }
 
       if (
-        text.includes("quien eres") ||
-        text.includes("como te llamas")
+        text.includes("who are you") ||
+        text.includes("your name")
       ) {
-        return selectedLanguage === "en-US"
-          ? "My name is HOLO. I am a virtual voice assistant created to listen, speak and help you explore ideas."
-          : "Me llamo HOLO. Soy una asistente virtual con voz, creada para escucharte, conversar y ayudarte a explorar ideas.";
+        return (
+          "My name is HOLO. I am a virtual " +
+          "voice assistant created to listen, " +
+          "speak and help you explore ideas."
+        );
       }
 
       if (
-        text.includes("que puedes hacer") ||
-        text.includes("capacidades")
+        text.includes("what can you do") ||
+        text.includes("capabilities")
       ) {
-        return selectedLanguage === "en-US"
-          ? "I can listen through your microphone, answer by text, speak my responses and assist with basic questions in this demonstration."
-          : "Puedo escucharte mediante el micrófono, responder por texto, hablar en voz alta y ayudarte con preguntas básicas en esta demostración.";
+        return (
+          "I can listen through your microphone, " +
+          "answer with text, speak my responses " +
+          "and help with basic questions in this demonstration."
+        );
       }
 
       if (
-        text.includes("dato curioso") ||
-        text.includes("curiosidad")
+        text.includes("interesting fact") ||
+        text.includes("fun fact")
       ) {
         const facts = [
-          "Los pulpos tienen tres corazones y su sangre contiene cobre, por eso es azul.",
-          "La luz del Sol tarda aproximadamente ocho minutos y veinte segundos en llegar a la Tierra.",
-          "Un día en Venus dura más que un año en Venus.",
-          "Los tiburones existían antes que los árboles.",
-          "El cerebro humano utiliza cerca del veinte por ciento de la energía del cuerpo."
+          "Octopuses have three hearts and blue blood.",
+          "Light from the Sun takes about eight minutes and twenty seconds to reach Earth.",
+          "A day on Venus is longer than a year on Venus.",
+          "Sharks existed before trees.",
+          "The human brain uses around twenty percent of the body's energy."
         ];
 
         return facts[
@@ -1710,97 +1744,92 @@
       }
 
       if (
-        text.includes("motiv") ||
-        text.includes("frase")
+        text.includes("motivation") ||
+        text.includes("motivational") ||
+        text.includes("quote")
       ) {
-        const phrases = [
-          "No necesitas avanzar rápido. Solo necesitas seguir avanzando.",
-          "Cada proyecto grande comenzó con una primera versión imperfecta.",
-          "La constancia convierte una idea en algo real.",
-          "Aprender también significa equivocarse, corregir y continuar.",
-          "Tu progreso de hoy es la base de lo que podrás crear mañana."
+        const quotes = [
+          "You do not need to move fast. You only need to keep moving.",
+          "Every great project began as an imperfect first version.",
+          "Consistency turns an idea into something real.",
+          "Learning means making mistakes, correcting them and continuing.",
+          "Your progress today becomes the foundation of what you create tomorrow."
         ];
 
-        return phrases[
+        return quotes[
           Math.floor(
             Math.random() *
-            phrases.length
+            quotes.length
           )
         ];
       }
 
-      if (
-        text.includes("gracias")
-      ) {
-        return selectedLanguage === "en-US"
-          ? "You are welcome. I am here whenever you need me."
-          : "De nada. Estaré aquí cuando necesites conversar.";
+      if (text.includes("thank")) {
+        return (
+          "You are welcome. I am here whenever you need me."
+        );
       }
 
       if (
-        text.includes("adios") ||
-        text.includes("hasta luego")
+        text.includes("goodbye") ||
+        text.includes("bye")
       ) {
-        return selectedLanguage === "en-US"
-          ? "Goodbye. I will be waiting for our next conversation."
-          : "Hasta luego. Estaré esperando nuestra próxima conversación.";
+        return (
+          "Goodbye. I will be waiting for our next conversation."
+        );
       }
 
       if (
-        text.includes("hora") ||
-        text.includes("que hora")
+        text.includes("time") ||
+        text.includes("what time")
       ) {
-        const now =
-          new Date();
+        const currentTime =
+          new Date().toLocaleTimeString(
+            "en-US",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
 
-        return selectedLanguage === "en-US"
-          ? `The current time is ${now.toLocaleTimeString(
-              "en-US",
-              {
-                hour: "2-digit",
-                minute: "2-digit"
-              }
-            )}.`
-          : `La hora actual es ${now.toLocaleTimeString(
-              "es-PE",
-              {
-                hour: "2-digit",
-                minute: "2-digit"
-              }
-            )}.`;
+        return (
+          `The current time is ${currentTime}.`
+        );
       }
 
       if (
-        text.includes("fecha") ||
-        text.includes("que dia")
+        text.includes("date") ||
+        text.includes("what day")
       ) {
-        const now =
-          new Date();
+        const currentDate =
+          new Date().toLocaleDateString(
+            "en-US",
+            {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            }
+          );
 
-        return selectedLanguage === "en-US"
-          ? `Today is ${now.toLocaleDateString(
-              "en-US",
-              {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              }
-            )}.`
-          : `Hoy es ${now.toLocaleDateString(
-              "es-PE",
-              {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              }
-            )}.`;
+        return (
+          `Today is ${currentDate}.`
+        );
       }
 
-      return selectedLanguage === "en-US"
-        ? "I understood your message. This version works with local demonstration responses. The next stage will connect me to a real artificial intelligence model."
-        : "Entendí tu mensaje. Esta versión utiliza respuestas locales de demostración. La siguiente etapa será conectarme a un modelo real de inteligencia artificial.";
+      if (
+        text.includes("how are you")
+      ) {
+        return (
+          "I am online and ready to talk. Thank you for asking."
+        );
+      }
+
+      return (
+        "I understood your message. This version uses " +
+        "local demonstration responses. The next stage " +
+        "will connect me to a real artificial intelligence model."
+      );
     }
 
     function getPreferredVoice() {
@@ -1808,28 +1837,21 @@
         window.speechSynthesis
           .getVoices();
 
-      const languagePrefix =
-        selectedLanguage.startsWith("es")
-          ? "es"
-          : "en";
-
-      const languageVoices =
+      const englishVoices =
         voices.filter(
           (voice) =>
             voice.lang
               .toLowerCase()
-              .startsWith(
-                languagePrefix
-              )
+              .startsWith("en")
         );
 
       return (
-        languageVoices.find(
+        englishVoices.find(
           (voice) =>
-            /female|mujer|monica|paulina|sabina|helena|google español/i
+            /female|samantha|zira|aria|google us english/i
               .test(voice.name)
         ) ||
-        languageVoices[0] ||
+        englishVoices[0] ||
         voices[0]
       );
     }
@@ -1841,7 +1863,7 @@
       ) {
         setHoloState(
           "idle",
-          "Lista para conversar"
+          "Ready to talk"
         );
 
         return;
@@ -1854,9 +1876,7 @@
           text
         );
 
-      utterance.lang =
-        selectedLanguage;
-
+      utterance.lang = "en-US";
       utterance.rate = 1;
       utterance.pitch = 1.08;
       utterance.volume = 1;
@@ -1872,21 +1892,21 @@
       utterance.onstart = () => {
         setHoloState(
           "speaking",
-          "HOLO está hablando"
+          "HOLO is speaking"
         );
       };
 
       utterance.onend = () => {
         setHoloState(
           "idle",
-          "Lista para conversar"
+          "Ready to talk"
         );
       };
 
       utterance.onerror = () => {
         setHoloState(
           "idle",
-          "Lista para conversar"
+          "Ready to talk"
         );
       };
 
@@ -1914,7 +1934,7 @@
 
       setHoloState(
         "thinking",
-        "Procesando mensaje"
+        "Processing message"
       );
 
       showTyping();
@@ -1955,8 +1975,7 @@
       recognition =
         new SpeechRecognitionClass();
 
-      recognition.lang =
-        selectedLanguage;
+      recognition.lang = "en-US";
 
       recognition.interimResults =
         false;
@@ -1980,7 +1999,7 @@
 
         setHoloState(
           "listening",
-          "Escuchando..."
+          "Listening..."
         );
       };
 
@@ -2008,7 +2027,7 @@
         ) {
           addMessage(
             "holo",
-            "No pude acceder correctamente al micrófono. Revisa los permisos del navegador."
+            "I could not access the microphone correctly. Check your browser permissions."
           );
         }
       };
@@ -2030,7 +2049,7 @@
         ) {
           setHoloState(
             "idle",
-            "Lista para conversar"
+            "Ready to talk"
           );
         }
       };
@@ -2040,7 +2059,7 @@
       if (!recognition) {
         addMessage(
           "holo",
-          "El reconocimiento de voz no está disponible en este navegador. Prueba con Google Chrome o Microsoft Edge."
+          "Voice recognition is not available in this browser. Try Google Chrome or Microsoft Edge."
         );
 
         return;
@@ -2052,9 +2071,6 @@
         recognition.stop();
         return;
       }
-
-      recognition.lang =
-        selectedLanguage;
 
       try {
         recognition.start();
@@ -2094,50 +2110,21 @@
           window.speechSynthesis.cancel();
 
           voiceToggle.textContent =
-            "🔇 Silencio";
+            "🔇 Voice Off";
 
           setHoloState(
             "idle",
-            "Voz desactivada"
+            "Voice disabled"
           );
         } else {
           voiceToggle.textContent =
-            "🔊 Voz";
+            "🔊 Voice On";
 
           setHoloState(
             "idle",
-            "Lista para conversar"
+            "Ready to talk"
           );
         }
-      }
-    );
-
-    languageSelector.addEventListener(
-      "change",
-      () => {
-        selectedLanguage =
-          languageSelector.value;
-
-        if (recognition) {
-          recognition.lang =
-            selectedLanguage;
-        }
-
-        const message =
-          selectedLanguage ===
-          "en-US"
-            ? "Language changed to English."
-            : "Idioma cambiado a español.";
-
-        lastHoloResponse =
-          message;
-
-        addMessage(
-          "holo",
-          message
-        );
-
-        speakText(message);
       }
     );
 
@@ -2153,12 +2140,12 @@
 
         setHoloState(
           "idle",
-          "Lista para conversar"
+          "Ready to talk"
         );
 
         addMessage(
           "holo",
-          "Conversación reiniciada. ¿En qué puedo ayudarte?"
+          "Conversation cleared. How can I help you?"
         );
       }
     );
@@ -2199,7 +2186,7 @@
 
     setTimeout(() => {
       const welcomeMessage =
-        "Hola. Soy HOLO, tu nueva asistente virtual. Puedes escribirme o presionar el micrófono para hablar conmigo.";
+        "Hello. I am HOLO, your new virtual assistant. You can type a message or press the microphone to talk to me.";
 
       lastHoloResponse =
         welcomeMessage;
@@ -2211,7 +2198,7 @@
 
       setHoloState(
         "idle",
-        "Lista para conversar"
+        "Ready to talk"
       );
     }, 450);
   </script>
