@@ -1829,104 +1829,127 @@
       );
     }
 
-    async function startSpeakingVideo() {
-      avatarFrame.classList.add(
-        "video-speaking"
-      );
+   function unlockSpeakingVideo() {
+  speakingVideo.muted = true;
+  speakingVideo.loop = true;
+  speakingVideo.playsInline = true;
 
-      try {
+  const playAttempt = speakingVideo.play();
+
+  if (playAttempt) {
+    playAttempt
+      .then(() => {
+        speakingVideo.pause();
         speakingVideo.currentTime = 0;
+      })
+      .catch(() => {
+        console.log("Video playback is waiting for permission.");
+      });
+  }
+}
 
-        await speakingVideo.play();
-      } catch (error) {
-        avatarFrame.classList.remove(
-          "video-speaking"
-        );
-      }
+function startSpeakingVideo() {
+  speakingVideo.muted = true;
+  speakingVideo.loop = true;
+  speakingVideo.playsInline = true;
+  speakingVideo.playbackRate = 1.15;
+  speakingVideo.currentTime = 0;
+
+  avatarFrame.classList.add("video-speaking");
+
+  const playAttempt = speakingVideo.play();
+
+  if (playAttempt) {
+    playAttempt.catch((error) => {
+      console.log("Speaking video could not start:", error);
+    });
+  }
+}
+
+function stopSpeakingVideo() {
+  speakingVideo.pause();
+  speakingVideo.currentTime = 0;
+
+  avatarFrame.classList.remove("video-speaking");
+}
+
+   function speakText(text) {
+  if (
+    !voiceEnabled ||
+    !("speechSynthesis" in window)
+  ) {
+    stopSpeakingVideo();
+
+    setHoloState(
+      "idle",
+      "Ready to talk"
+    );
+
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  stopSpeakingVideo();
+
+  const speech =
+    new SpeechSynthesisUtterance(text);
+
+  speech.lang = "en-US";
+  speech.rate = 1;
+  speech.pitch = 1.08;
+  speech.volume = 1;
+
+  const preferredVoice =
+    getPreferredVoice();
+
+  if (preferredVoice) {
+    speech.voice = preferredVoice;
+  }
+
+  let speechFinished = false;
+
+  function finishSpeaking() {
+    if (speechFinished) {
+      return;
     }
 
-    function stopSpeakingVideo() {
-      speakingVideo.pause();
-      speakingVideo.currentTime = 0;
+    speechFinished = true;
 
-      avatarFrame.classList.remove(
-        "video-speaking"
-      );
-    }
+    stopSpeakingVideo();
 
-    function speakText(text) {
-      if (
-        !voiceEnabled ||
-        !("speechSynthesis" in window)
-      ) {
-        stopSpeakingVideo();
+    setHoloState(
+      "idle",
+      "Ready to talk"
+    );
+  }
 
-        setHoloState(
-          "idle",
-          "Ready to talk"
-        );
+  startSpeakingVideo();
 
-        return;
-      }
+  setHoloState(
+    "speaking",
+    "HOLO is speaking"
+  );
 
-      window.speechSynthesis.cancel();
+  speech.onstart = () => {
+    startSpeakingVideo();
 
-      const speech =
-        new SpeechSynthesisUtterance(
-          text
-        );
+    setHoloState(
+      "speaking",
+      "HOLO is speaking"
+    );
+  };
 
-      speech.lang = "en-US";
-      speech.rate = 1;
-      speech.pitch = 1.08;
-      speech.volume = 1;
+  speech.onend = finishSpeaking;
+  speech.onerror = finishSpeaking;
 
-      const preferredVoice =
-        getPreferredVoice();
-
-      if (preferredVoice) {
-        speech.voice =
-          preferredVoice;
-      }
-
-      speech.onstart = () => {
-        setHoloState(
-          "speaking",
-          "HOLO is speaking"
-        );
-
-        startSpeakingVideo();
-      };
-
-      speech.onend = () => {
-        stopSpeakingVideo();
-
-        setHoloState(
-          "idle",
-          "Ready to talk"
-        );
-      };
-
-      speech.onerror = () => {
-        stopSpeakingVideo();
-
-        setHoloState(
-          "idle",
-          "Ready to talk"
-        );
-      };
-
-      window.speechSynthesis.speak(
-        speech
-      );
-    }
-
+  window.speechSynthesis.speak(speech);
+}
     function processMessage(
       userMessage
     ) {
       const cleanMessage =
         userMessage.trim();
-
+unlockSpeakingVideo();
       if (!cleanMessage) {
         return;
       }
