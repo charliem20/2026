@@ -549,7 +549,8 @@
       opacity: 0.35;
     }
 
-   .avatar-video {
+  .idle-image,
+.avatar-video {
   position: absolute;
   inset: 0;
 
@@ -561,10 +562,27 @@
   object-fit: cover;
   object-position: center top;
 
-  background: #000;
+  transition: opacity 0.15s ease;
+}
 
+.idle-image {
+  z-index: 2;
   opacity: 1;
-  visibility: visible;
+}
+
+.avatar-video {
+  z-index: 3;
+  opacity: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+.avatar-frame.video-speaking .idle-image {
+  opacity: 0;
+}
+
+.avatar-frame.video-speaking .avatar-video {
+  opacity: 1;
 }
 
      
@@ -1337,15 +1355,20 @@
         <div class="avatar-glow"></div>
         <div class="orbit"></div>
 
-      <div
+     <div
   class="avatar-frame"
   id="avatarFrame"
 >
+  <img
+    class="idle-image"
+    src="./holo.png"
+    alt="HOLO virtual assistant"
+  >
+
   <video
     class="avatar-video"
     id="speakingVideo"
     src="./holo-speaking..mp4"
-    poster="./holo.png"
     muted
     loop
     playsinline
@@ -1909,19 +1932,33 @@ function startSpeakingVideo() {
     speakingVideo.play();
 
   if (playPromise) {
-    playPromise.catch((error) => {
-      console.log(
-        "Speaking video could not start:",
-        error
-      );
+    playPromise
+      .then(() => {
+        avatarFrame.classList.add(
+          "video-speaking"
+        );
+      })
+      .catch((error) => {
+        avatarFrame.classList.remove(
+          "video-speaking"
+        );
 
-      systemStatus.textContent =
-        "VIDEO BLOCKED";
-    });
+        console.log(
+          "Speaking video could not start:",
+          error
+        );
+
+        systemStatus.textContent =
+          "VIDEO BLOCKED";
+      });
   }
 }
 
 function stopSpeakingVideo() {
+  avatarFrame.classList.remove(
+    "video-speaking"
+  );
+
   speakingVideo.pause();
 
   try {
@@ -1932,7 +1969,6 @@ function stopSpeakingVideo() {
     );
   }
 }
-
 function cancelCurrentSpeech() {
   activeSpeechId += 1;
 
